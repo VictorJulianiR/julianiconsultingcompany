@@ -371,10 +371,22 @@ h3 {
 
 .hero-lede {
   max-width: 58ch;
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.55rem;
   color: oklch(32% 0.05 252);
   font-size: clamp(1rem, 1.45vw, 1.18rem);
   font-weight: 560;
+}
+
+.hero-plain {
+  max-width: 54ch;
+  margin-bottom: 0.9rem;
+  padding: 0.78rem 0.9rem;
+  border: 1px solid oklch(58% 0.15 145 / 0.24);
+  border-radius: var(--radius);
+  background: oklch(94% 0.052 145 / 0.72);
+  color: oklch(24% 0.075 145);
+  font-weight: 880;
+  line-height: 1.36;
 }
 
 .thank-you-title {
@@ -439,7 +451,15 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
-  margin: 0.92rem 0 0.75rem;
+  margin: 0.92rem 0 0.5rem;
+}
+
+.purchase-reassurance {
+  max-width: 58ch;
+  margin-bottom: 0.75rem;
+  color: oklch(34% 0.048 252);
+  font-size: 0.94rem;
+  font-weight: 760;
 }
 
 .button {
@@ -1131,7 +1151,7 @@ details p {
   position: fixed;
   left: 50%;
   bottom: 1rem;
-  z-index: 30;
+  z-index: 70;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -1227,15 +1247,16 @@ details p {
   bottom: 1rem;
   z-index: 60;
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.85rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
   width: min(calc(100% - 2rem), 520px);
-  padding: 1rem;
+  padding: 0.58rem 0.64rem;
   border: 1px solid oklch(100% 0.01 88 / 0.24);
-  border-radius: 14px;
+  border-radius: 10px;
   background: oklch(18% 0.075 255 / 0.96);
   color: var(--paper-strong);
-  box-shadow: var(--shadow);
+  box-shadow: 0 16px 48px oklch(16% 0.055 255 / 0.18);
 }
 
 .cookie-banner[hidden] {
@@ -1243,18 +1264,22 @@ details p {
 }
 
 .cookie-banner p {
-  margin: 0.28rem 0 0;
+  margin: 0.18rem 0 0;
   color: oklch(88% 0.024 88);
+  font-size: 0.8rem;
+  line-height: 1.25;
 }
 
 .cookie-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
+  flex-wrap: nowrap;
+  gap: 0.42rem;
 }
 
 .cookie-actions .button {
-  min-height: 2.8rem;
+  min-height: 2.35rem;
+  padding: 0.56rem 0.72rem;
+  font-size: 0.88rem;
 }
 
 .legal-page {
@@ -1492,10 +1517,11 @@ details p {
   }
 
   .cookie-banner {
-    left: 1rem;
+    left: 0.75rem;
     right: 1rem;
-    bottom: 1rem;
-    width: auto;
+    bottom: 0.75rem;
+    grid-template-columns: minmax(0, 1fr);
+    width: min(calc(100% - 1.5rem), 360px);
   }
 
   .postbuy-hero,
