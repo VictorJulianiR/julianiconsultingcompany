@@ -590,6 +590,99 @@ h3 {
   animation-delay: -2.7s;
 }
 
+.consulting-page .hero {
+  padding-top: clamp(0.7rem, 1.7vw, 1.05rem);
+  padding-bottom: clamp(1.1rem, 2.6vw, 2rem);
+}
+
+.consulting-page .hero-grid {
+  grid-template-columns: minmax(0, 0.82fr) minmax(300px, 0.64fr);
+  gap: clamp(1rem, 3vw, 2.15rem);
+}
+
+.consulting-page .deadline-kicker {
+  margin-bottom: 0.58rem;
+}
+
+.consulting-page h1:not(.thank-you-title) {
+  max-width: 12.4ch;
+  font-size: clamp(2.65rem, 5vw, 4.45rem);
+  line-height: 0.93;
+}
+
+.consulting-page .thank-you-title {
+  max-width: 11.4ch;
+  margin-bottom: 0.55rem;
+}
+
+.consulting-page .thank-you-title span {
+  font-size: clamp(3.35rem, 6.8vw, 5.95rem);
+  line-height: 0.8;
+}
+
+.consulting-page .thank-you-title small {
+  margin-top: clamp(0.44rem, 1.1vw, 0.72rem);
+  font-size: clamp(1.95rem, 4.2vw, 4.25rem);
+  line-height: 0.94;
+}
+
+.consulting-page .hero-lede {
+  max-width: 54ch;
+  margin-bottom: 0.62rem;
+  font-size: clamp(0.97rem, 1.22vw, 1.1rem);
+  line-height: 1.42;
+}
+
+.consulting-page .hero-timer {
+  max-width: 500px;
+  margin: 0.68rem 0 0.64rem;
+}
+
+.consulting-page .timer-unit {
+  min-height: 3.55rem;
+  padding: 0.43rem 0.45rem;
+}
+
+.consulting-page .timer-unit strong {
+  font-size: clamp(1.18rem, 2vw, 1.72rem);
+}
+
+.consulting-page .timer-unit span {
+  font-size: 0.76rem;
+}
+
+.consulting-page .hero-actions {
+  margin: 0.7rem 0 0.62rem;
+}
+
+.consulting-page .button-buy {
+  min-height: 3.35rem;
+  font-size: clamp(1rem, 1.45vw, 1.12rem);
+}
+
+.consulting-page .checkout-note {
+  font-size: 0.88rem;
+}
+
+.consulting-page .checkout-note span {
+  min-height: 1.88rem;
+  padding-block: 0.3rem;
+}
+
+.consulting-page .hero-stage {
+  min-height: 340px;
+}
+
+.consulting-page .product-cover {
+  inset: 9% 0 auto auto;
+  width: min(72%, 360px);
+}
+
+.consulting-page .floating-card {
+  width: min(70%, 250px);
+  padding: 0.64rem;
+}
+
 .conversion-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1268,6 +1361,14 @@ details p {
     animation: none;
   }
 
+  .consulting-page .hero-stage {
+    min-height: 320px;
+  }
+
+  .consulting-page .product-cover {
+    width: min(70%, 300px);
+  }
+
   .conversion-strip,
   .value-cards {
     grid-template-columns: 1fr;
@@ -1307,6 +1408,15 @@ details p {
     font-size: clamp(2.15rem, 11vw, 3.35rem);
   }
 
+  .consulting-page .thank-you-title span {
+    font-size: clamp(2.9rem, 14vw, 3.6rem);
+  }
+
+  .consulting-page .thank-you-title small,
+  .consulting-page h1:not(.thank-you-title) {
+    font-size: clamp(2rem, 10vw, 3.05rem);
+  }
+
   .hero-timer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1323,6 +1433,14 @@ details p {
   .product-cover {
     width: min(82%, 300px);
     top: 10%;
+  }
+
+  .consulting-page .hero-stage {
+    min-height: 290px;
+  }
+
+  .consulting-page .product-cover {
+    width: min(72%, 260px);
   }
 
   .floating-card {
