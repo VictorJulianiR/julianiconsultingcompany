@@ -8,13 +8,13 @@ Este diretório é o repositório git do site. Ele foi separado da pasta princip
 
 ## Trocar checkout
 
-Quando a Kiwify gerar o link de checkout, substitua em `script.js`:
+Link de checkout em uso:
 
 ```js
-const CHECKOUT_URL = "https://pay.kiwify.com.br/SEU-CHECKOUT-AQUI";
+const CHECKOUT_URL = "https://pay.kiwify.com.br/RQASrq5";
 ```
 
-Depois faça commit e push para `main`.
+Depois de qualquer ajuste, faça commit e push para `main`.
 
 ## Arquivos
 
