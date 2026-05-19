@@ -5,6 +5,16 @@ const checkoutLinks = document.querySelectorAll(".js-checkout");
 checkoutLinks.forEach((link) => {
   link.setAttribute("href", CHECKOUT_URL);
   link.setAttribute("rel", "noopener");
+  link.addEventListener("click", () => {
+    if (typeof window.fbq !== "function") return;
+
+    window.fbq("track", "InitiateCheckout", {
+      content_name: "IR de Ultima Hora com IA",
+      content_type: "product",
+      currency: "BRL",
+      value: 47.0,
+    });
+  });
 });
 
 const pad = (value) => String(value).padStart(2, "0");
