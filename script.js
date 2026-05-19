@@ -1,5 +1,33 @@
 const CHECKOUT_URL = "https://pay.kiwify.com.br/RQASrq5";
 const DEADLINE = new Date("2026-05-29T23:59:59-03:00");
+const META_PIXEL_ID = "2506439286493521";
+const MARKETING_CONSENT_KEY = "irIaMarketingConsent";
+
+const getMarketingConsent = () => {
+  try {
+    return window.localStorage.getItem(MARKETING_CONSENT_KEY);
+  } catch {
+    return null;
+  }
+};
+
+const setMarketingConsent = (value) => {
+  try {
+    window.localStorage.setItem(MARKETING_CONSENT_KEY, value);
+  } catch {
+    return false;
+  }
+  return true;
+};
+
+const clearMarketingConsent = () => {
+  try {
+    window.localStorage.removeItem(MARKETING_CONSENT_KEY);
+  } catch {
+    return false;
+  }
+  return true;
+};
 
 const checkoutLinks = document.querySelectorAll(".js-checkout");
 checkoutLinks.forEach((link) => {
@@ -78,3 +106,70 @@ function updateStickyBuy() {
 
 updateStickyBuy();
 window.addEventListener("scroll", updateStickyBuy, { passive: true });
+
+function loadMetaPixel() {
+  if (window.fbq || !META_PIXEL_ID) return;
+  !(function (f, b, e, v, n, t, s) {
+    if (f.fbq) return;
+    n = f.fbq = function () {
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    };
+    if (!f._fbq) f._fbq = n;
+    n.push = n;
+    n.loaded = true;
+    n.version = "2.0";
+    n.queue = [];
+    t = b.createElement(e);
+    t.async = true;
+    t.src = v;
+    s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
+  })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  window.fbq("init", META_PIXEL_ID);
+  window.fbq("track", "PageView");
+}
+
+function setupCookieBanner() {
+  const banner = document.querySelector("[data-cookie-banner]");
+  const accept = document.querySelector("[data-cookie-accept]");
+  const reject = document.querySelector("[data-cookie-reject]");
+  const resetButtons = document.querySelectorAll("[data-cookie-reset]");
+  const consent = getMarketingConsent();
+
+  resetButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      clearMarketingConsent();
+      if (banner) banner.hidden = false;
+    });
+  });
+
+  if (accept) {
+    accept.addEventListener("click", () => {
+      setMarketingConsent("granted");
+      if (banner) banner.hidden = true;
+      loadMetaPixel();
+    });
+  }
+
+  if (reject) {
+    reject.addEventListener("click", () => {
+      setMarketingConsent("denied");
+      if (banner) banner.hidden = true;
+    });
+  }
+
+  if (consent === "granted") {
+    loadMetaPixel();
+    if (banner) banner.hidden = true;
+    return;
+  }
+
+  if (consent === "denied") {
+    if (banner) banner.hidden = true;
+    return;
+  }
+
+  if (banner) banner.hidden = false;
+}
+
+setupCookieBanner();

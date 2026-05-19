@@ -23,4 +23,8 @@ Depois de qualquer ajuste, faça commit e push para `main`.
 - `script.js`: link do checkout e contagem até 29/05/2026.
 - `obrigado/index.html`: rota `/obrigado/` para página de obrigado personalizada.
 - `upsell/index.html`: rota `/upsell/` para a oferta visual da Conferência Assistida Express.
+- `termos/index.html`: rota `/termos/`.
+- `privacidade/index.html`: rota `/privacidade/`.
+- `reembolso/index.html`: rota `/reembolso/`.
+- `contato/index.html`: rota `/contato/`.
 - `assets/`: criativo do produto e previews leves do PDF.

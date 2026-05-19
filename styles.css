@@ -1008,6 +1008,116 @@ details p {
   font-size: 0.92rem;
 }
 
+.site-footer div,
+.site-footer nav,
+.site-footer span {
+  display: flex;
+}
+
+.site-footer div {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.site-footer strong {
+  color: var(--navy);
+}
+
+.site-footer nav {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.site-footer a,
+.site-footer button {
+  color: inherit;
+  font-weight: 850;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+.site-footer button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-decoration-line: underline;
+}
+
+.cookie-banner {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.85rem;
+  width: min(calc(100% - 2rem), 520px);
+  padding: 1rem;
+  border: 1px solid oklch(100% 0.01 88 / 0.24);
+  border-radius: 14px;
+  background: oklch(18% 0.075 255 / 0.96);
+  color: var(--paper-strong);
+  box-shadow: var(--shadow);
+}
+
+.cookie-banner[hidden] {
+  display: none;
+}
+
+.cookie-banner p {
+  margin: 0.28rem 0 0;
+  color: oklch(88% 0.024 88);
+}
+
+.cookie-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.cookie-actions .button {
+  min-height: 2.8rem;
+}
+
+.legal-page {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.legal-document {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: clamp(1.2rem, 4vw, 3rem);
+}
+
+.legal-brand {
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.legal-document h1 {
+  max-width: 12ch;
+  font-size: clamp(3rem, 7vw, 5.8rem);
+}
+
+.legal-document h2 {
+  margin-top: 2rem;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+}
+
+.legal-document p,
+.legal-document li {
+  color: var(--muted);
+}
+
+.legal-document a {
+  color: var(--red-dark);
+  font-weight: 850;
+}
+
 :focus-visible {
   outline: 3px solid var(--gold);
   outline-offset: 3px;
@@ -1168,6 +1278,17 @@ details p {
 
   .site-footer {
     flex-direction: column;
+  }
+
+  .site-footer nav {
+    justify-content: flex-start;
+  }
+
+  .cookie-banner {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    width: auto;
   }
 
   .postbuy-hero,

@@ -16,39 +16,11 @@
     <meta property="og:image" content="assets/product-cover.png" />
     <meta property="og:type" content="website" />
     <meta name="theme-color" content="#07172b" />
-    <script>
-      !(function (f, b, e, v, n, t, s) {
-        if (f.fbq) return;
-        n = f.fbq = function () {
-          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
-        };
-        if (!f._fbq) f._fbq = n;
-        n.push = n;
-        n.loaded = true;
-        n.version = "2.0";
-        n.queue = [];
-        t = b.createElement(e);
-        t.async = true;
-        t.src = v;
-        s = b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t, s);
-      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
-      fbq("init", "2506439286493521");
-      fbq("track", "PageView");
-    </script>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
     <link rel="preload" as="image" href="assets/product-cover.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <noscript>
-      <img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=2506439286493521&ev=PageView&noscript=1"
-        alt=""
-      />
-    </noscript>
     <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
     <header class="site-header" aria-label="Topo">
@@ -285,6 +257,9 @@
         <p>
           Este guia é educativo. Não é produto oficial da Receita Federal. Não substitui contador, advogado ou consultor tributário. Não promete redução de imposto, restituição, ausência de multa ou ausência de malha fina. A responsabilidade pela declaração é do contribuinte.
         </p>
+        <p>
+          Fornecedor: Victor Juliani Rodrigues Consultoria em Tecnologia da Informação LTDA, CNPJ 58.431.460/0001-54. Endereço cadastral: Avenida Paulista, 1106, Sala 01, Andar 16, Bela Vista, São Paulo/SP, CEP 01310-914. Venda processada pela Kiwify. Direito de arrependimento de 7 dias para compras online, conforme legislação aplicável.
+        </p>
       </section>
 
       <section class="faq-section" id="faq" aria-labelledby="faq-title">
@@ -309,6 +284,10 @@
             <summary>Funciona para quem tem investimentos?</summary>
             <p>O fluxo cobre B3, corretoras, ativos, rendimentos, JCP, FIIs e DARF como pontos de revisão.</p>
           </details>
+          <details>
+            <summary>Posso pedir reembolso?</summary>
+            <p>Sim. Para compras online, você pode exercer o direito de arrependimento em até 7 dias. Veja a política de reembolso no rodapé.</p>
+          </details>
         </div>
       </section>
     </main>
@@ -322,9 +301,33 @@
     </aside>
 
     <footer class="site-footer">
-      <span>IR de Última Hora com IA</span>
-      <span>Material educativo independente.</span>
+      <div>
+        <strong>IR de Última Hora com IA</strong>
+        <span>Victor Juliani Rodrigues Consultoria em Tecnologia da Informação LTDA · CNPJ 58.431.460/0001-54</span>
+        <span>Endereço cadastral: Avenida Paulista, 1106, Sala 01, Andar 16, Bela Vista, São Paulo/SP.</span>
+        <span>Produto digital educativo independente. Venda processada pela Kiwify.</span>
+      </div>
+      <nav aria-label="Links legais">
+        <a href="termos/">Termos</a>
+        <a href="privacidade/">Privacidade</a>
+        <a href="reembolso/">Reembolso</a>
+        <a href="contato/">Contato</a>
+        <button type="button" data-cookie-reset>Cookies</button>
+      </nav>
     </footer>
+
+    <section class="cookie-banner" data-cookie-banner aria-label="Preferências de privacidade">
+      <div>
+        <strong>Privacidade e anúncios</strong>
+        <p>
+          Usamos cookies essenciais para o site funcionar. O Meta Pixel só será carregado se você aceitar cookies de marketing.
+        </p>
+      </div>
+      <div class="cookie-actions">
+        <button class="button button-secondary" type="button" data-cookie-reject>Recusar marketing</button>
+        <button class="button button-primary" type="button" data-cookie-accept>Aceitar marketing</button>
+      </div>
+    </section>
 
     <script src="script.js" defer></script>
   </body>
