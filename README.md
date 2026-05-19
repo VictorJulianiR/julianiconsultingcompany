@@ -22,7 +22,7 @@ Depois de qualquer ajuste, faça commit e push para `main`.
 - `styles.css`: sistema visual responsivo.
 - `script.js`: link do checkout e contagem até 29/05/2026.
 - `obrigado/index.html`: rota `/obrigado/` para página de obrigado personalizada.
-- `upsell/index.html`: rota `/upsell/` para a oferta visual da Conferência Assistida Express.
+- `upsell/index.html`: rota `/upsell/` para a oferta visual do Auxílio ao Vivo + Relatório.
 - `termos/index.html`: rota `/termos/`.
 - `privacidade/index.html`: rota `/privacidade/`.
 - `reembolso/index.html`: rota `/reembolso/`.

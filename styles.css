@@ -924,6 +924,45 @@ h3 {
   color: oklch(83% 0.02 88);
 }
 
+.kiwify-offer-action {
+  margin-top: 0.7rem;
+}
+
+#kiwify-upsell-trigger-y8mPNe7 {
+  min-height: 4.05rem !important;
+  padding: 0.95rem clamp(1.25rem, 4vw, 2.6rem) !important;
+  border-color: var(--red) !important;
+  border-radius: 999px !important;
+  background: var(--red) !important;
+  color: var(--paper-strong) !important;
+  font-family: inherit !important;
+  font-size: clamp(1.05rem, 1.75vw, 1.22rem) !important;
+  font-weight: 950 !important;
+  line-height: 1.1 !important;
+  box-shadow: 0 18px 38px oklch(44% 0.18 29 / 0.28) !important;
+}
+
+#kiwify-upsell-trigger-y8mPNe7:hover {
+  background: var(--red-dark) !important;
+  border-color: var(--red-dark) !important;
+}
+
+#kiwify-upsell-cancel-trigger-y8mPNe7 {
+  color: oklch(86% 0.022 88) !important;
+  font-family: inherit !important;
+  font-weight: 760 !important;
+  text-underline-offset: 0.18em !important;
+}
+
+.kiwify-fallback {
+  display: inline-block;
+  margin-top: 0.9rem;
+  color: var(--navy);
+  font-size: 0.94rem;
+  font-weight: 850;
+  text-underline-offset: 0.18em;
+}
+
 .legal-section {
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
