@@ -5,15 +5,22 @@ const checkoutLinks = document.querySelectorAll(".js-checkout");
 checkoutLinks.forEach((link) => {
   link.setAttribute("href", CHECKOUT_URL);
   link.setAttribute("rel", "noopener");
-  link.addEventListener("click", () => {
-    if (typeof window.fbq !== "function") return;
+  link.addEventListener("click", (event) => {
+    const isPlainLeftClick =
+      event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
 
+    if (!isPlainLeftClick || typeof window.fbq !== "function") return;
+
+    event.preventDefault();
     window.fbq("track", "InitiateCheckout", {
       content_name: "IR de Ultima Hora com IA",
       content_type: "product",
       currency: "BRL",
       value: 47.0,
     });
+    window.setTimeout(() => {
+      window.location.href = CHECKOUT_URL;
+    }, 350);
   });
 });
 
