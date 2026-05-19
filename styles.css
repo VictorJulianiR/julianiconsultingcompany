@@ -377,6 +377,29 @@ h3 {
   font-weight: 560;
 }
 
+.thank-you-title {
+  max-width: 10.5ch;
+}
+
+.thank-you-title span,
+.thank-you-title small {
+  display: block;
+}
+
+.thank-you-title span {
+  color: var(--red);
+  font-size: clamp(4rem, 8.4vw, 7.4rem);
+  line-height: 0.78;
+}
+
+.thank-you-title small {
+  margin-top: clamp(0.7rem, 2vw, 1.15rem);
+  color: var(--navy);
+  font: inherit;
+  font-size: clamp(2.45rem, 5.4vw, 5.7rem);
+  line-height: 0.92;
+}
+
 .hero-timer {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1230,6 +1253,14 @@ details p {
   h1 {
     max-width: 10ch;
     font-size: clamp(2.55rem, 12.5vw, 3.55rem);
+  }
+
+  .thank-you-title span {
+    font-size: clamp(3.35rem, 17vw, 4.2rem);
+  }
+
+  .thank-you-title small {
+    font-size: clamp(2.15rem, 11vw, 3.35rem);
   }
 
   .hero-timer {
