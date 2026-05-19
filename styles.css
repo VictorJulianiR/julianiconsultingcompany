@@ -471,17 +471,31 @@ h3 {
 .checkout-note {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.45rem;
-  color: var(--muted);
-  font-size: 0.95rem;
-  font-weight: 760;
+  gap: 0.55rem;
+  color: var(--navy);
+  font-size: 0.94rem;
+  font-weight: 850;
 }
 
 .checkout-note span {
-  padding: 0.34rem 0.55rem;
-  border: 1px solid var(--line);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  min-height: 2.05rem;
+  padding: 0.38rem 0.7rem 0.38rem 0.58rem;
+  border: 1px solid oklch(63% 0.21 29 / 0.22);
   border-radius: 999px;
-  background: oklch(99% 0.012 88 / 0.68);
+  background: oklch(99.5% 0.014 88 / 0.86);
+  box-shadow: 0 10px 26px oklch(16% 0.055 255 / 0.07);
+}
+
+.checkout-note span::before {
+  content: "";
+  width: 0.42rem;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: var(--red);
+  box-shadow: 0 0 0 0.22rem oklch(63% 0.21 29 / 0.12);
 }
 
 .hero-stage {
