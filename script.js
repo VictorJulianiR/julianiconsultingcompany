@@ -15,6 +15,7 @@ const countdownParts = {
   seconds: document.querySelector('[data-countdown="seconds"]'),
 };
 const countdownLabels = document.querySelectorAll("[data-countdown-label]");
+const stickyBuy = document.querySelector(".sticky-buy");
 
 function updateCountdown() {
   const now = new Date();
@@ -52,3 +53,11 @@ function updateCountdown() {
 
 updateCountdown();
 window.setInterval(updateCountdown, 1000);
+
+function updateStickyBuy() {
+  if (!stickyBuy) return;
+  stickyBuy.classList.toggle("is-visible", window.scrollY > 420);
+}
+
+updateStickyBuy();
+window.addEventListener("scroll", updateStickyBuy, { passive: true });
