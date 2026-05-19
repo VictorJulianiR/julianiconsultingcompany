@@ -21,7 +21,7 @@ Depois de qualquer ajuste, faça commit e push para `main`.
 - `index.html`: estrutura e copy da landing.
 - `styles.css`: sistema visual responsivo.
 - `script.js`: link do checkout e contagem até 29/05/2026.
-- `obrigado/index.html`: rota `/obrigado/` para página de obrigado personalizada.
+- `obrigado/index.html`: rota `/obrigado/` com a sales page do Auxílio ao Vivo + Relatório.
 - `upsell/index.html`: rota `/upsell/` para a oferta visual do Auxílio ao Vivo + Relatório.
 - `termos/index.html`: rota `/termos/`.
 - `privacidade/index.html`: rota `/privacidade/`.
