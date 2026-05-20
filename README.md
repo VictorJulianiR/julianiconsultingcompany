@@ -14,6 +14,15 @@ Link de checkout em uso:
 const CHECKOUT_URL = "https://pay.kiwify.com.br/RQASrq5";
 ```
 
+## Notificacao de clique em compra
+
+Cada clique em CTA de compra chama `/api/buy-click` antes de seguir para a Kiwify. Configure na Vercel pelo menos um canal:
+
+- `BUY_CLICK_WEBHOOK_URL`: webhook genérico para push, ntfy, Discord, Slack, Make/Zapier, etc.
+- `RESEND_API_KEY`, `BUY_CLICK_EMAIL_TO`, `BUY_CLICK_EMAIL_FROM`: e-mail via Resend.
+
+Se nenhuma variável estiver configurada, a rota responde sem enviar notificação e o checkout continua funcionando.
+
 Depois de qualquer ajuste, faça commit e push para `main`.
 
 ## Arquivos

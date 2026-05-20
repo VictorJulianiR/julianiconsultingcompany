@@ -33,7 +33,7 @@
         <a href="#metodo">Método</a>
         <a href="#faq">FAQ</a>
       </nav>
-      <a class="nav-cta js-checkout" href="https://pay.kiwify.com.br/RQASrq5">Comprar R$ 47</a>
+      <a class="nav-cta js-checkout" href="https://pay.kiwify.com.br/RQASrq5" data-checkout-source="nav">Comprar R$ 47</a>
     </header>
 
     <main id="conteudo">
@@ -69,7 +69,7 @@
             </div>
 
             <div class="hero-actions" aria-label="Comprar o guia">
-              <a class="button button-primary button-buy js-checkout" href="https://pay.kiwify.com.br/RQASrq5">
+              <a class="button button-primary button-buy js-checkout" href="https://pay.kiwify.com.br/RQASrq5" data-checkout-source="hero">
                 Comprar agora por R$ 47
               </a>
               <a class="button button-secondary" href="#metodo">Ver o que você recebe</a>
@@ -163,7 +163,7 @@
           <p>
             Em vez de abrir vinte PDFs e tentar lembrar onde cada coisa entra, você segue um processo: localizar informes, rodar os prompts, abrir o relatório e atacar cada card.
           </p>
-          <a class="button button-primary button-wide js-checkout" href="https://pay.kiwify.com.br/RQASrq5">Quero aplicar hoje por R$ 47</a>
+          <a class="button button-primary button-wide js-checkout" href="https://pay.kiwify.com.br/RQASrq5" data-checkout-source="method">Quero aplicar hoje por R$ 47</a>
         </div>
 
         <div class="report-preview" aria-label="Exemplo de relatório gerado">
@@ -219,13 +219,13 @@
           <p class="eyebrow">Urgência real</p>
           <h2 id="urgency-title">O prazo final é o último minuto de 29/05/2026.</h2>
           <p>
-            A página não precisa inventar pânico. A urgência já existe: quanto mais perto do prazo, menos tempo sobra para procurar informe, conferir B3, revisar DARF e corrigir pendência.
+            Use os próximos minutos para juntar informes, conferir B3, revisar DARF e transformar pendências em uma fila clara de ação antes de transmitir.
           </p>
         </div>
         <div class="urgency-card">
           <span>Agora</span>
           <strong data-countdown-label>Calculando tempo restante</strong>
-          <a class="button button-primary button-wide js-checkout" href="https://pay.kiwify.com.br/RQASrq5">Comprar e começar</a>
+          <a class="button button-primary button-wide js-checkout" href="https://pay.kiwify.com.br/RQASrq5" data-checkout-source="urgency">Comprar e começar</a>
         </div>
       </section>
 
@@ -239,12 +239,12 @@
             <li>Quer revisar com método antes de transmitir.</li>
           </ul>
         </div>
-        <div class="not-for">
-          <p class="eyebrow">Não compre se</p>
+        <div class="also-for">
+          <p class="eyebrow">Compre se</p>
           <ul>
-            <li>Você quer promessa de pagar menos imposto.</li>
-            <li>Você espera que a IA transmita a declaração sozinha.</li>
-            <li>Seu caso é complexo e você não quer consultar contador.</li>
+            <li>Seu imposto é super complexo, mas você quer fazer sozinho.</li>
+            <li>Você está sem tempo ou com dificuldade de encontrar um contador.</li>
+            <li>Quer aprender a utilizar IA para resolver problemas do dia a dia.</li>
           </ul>
         </div>
       </section>
@@ -255,18 +255,8 @@
         <p>
           Compre o guia, abra o PDF e use os prompts para transformar seus documentos em checklist de revisão antes do prazo.
         </p>
-        <a class="button button-primary button-buy js-checkout" href="https://pay.kiwify.com.br/RQASrq5">Comprar agora por R$ 47</a>
+        <a class="button button-primary button-buy js-checkout" href="https://pay.kiwify.com.br/RQASrq5" data-checkout-source="final">Comprar agora por R$ 47</a>
         <small>Compra processada pela Kiwify. Produto digital educativo em PDF.</small>
-      </section>
-
-      <section class="legal-section" aria-label="Aviso legal">
-        <strong>Aviso importante</strong>
-        <p>
-          Este guia é educativo. Não é produto oficial da Receita Federal. Não substitui contador, advogado ou consultor tributário. Não promete redução de imposto, restituição, ausência de multa ou ausência de malha fina. A responsabilidade pela declaração é do contribuinte.
-        </p>
-        <p>
-          Fornecedor: Victor Juliani Rodrigues Consultoria em Tecnologia da Informação LTDA, CNPJ 58.431.460/0001-54. Endereço cadastral: Avenida Paulista, 1106, Sala 01, Andar 16, Bela Vista, São Paulo/SP, CEP 01310-914. Venda processada pela Kiwify. Direito de arrependimento de 7 dias para compras online, conforme legislação aplicável.
-        </p>
       </section>
 
       <section class="faq-section" id="faq" aria-labelledby="faq-title">
@@ -297,6 +287,16 @@
           </details>
         </div>
       </section>
+
+      <section class="legal-section" aria-label="Aviso legal">
+        <strong>Aviso importante</strong>
+        <p>
+          Este guia é educativo. Não é produto oficial da Receita Federal. Não substitui contador, advogado ou consultor tributário. Não promete redução de imposto, restituição, ausência de multa ou ausência de malha fina. A responsabilidade pela declaração é do contribuinte.
+        </p>
+        <p>
+          Fornecedor: Victor Juliani Rodrigues Consultoria em Tecnologia da Informação LTDA, CNPJ 58.431.460/0001-54. Endereço cadastral: Avenida Paulista, 1106, Sala 01, Andar 16, Bela Vista, São Paulo/SP, CEP 01310-914. Venda processada pela Kiwify. Direito de arrependimento de 7 dias para compras online, conforme legislação aplicável.
+        </p>
+      </section>
     </main>
 
     <aside class="sticky-buy" aria-label="Comprar guia">
@@ -304,7 +304,7 @@
         <strong>IR no fim do prazo?</strong>
         <span data-countdown-label>Calculando tempo restante</span>
       </div>
-      <a class="button button-primary js-checkout" href="https://pay.kiwify.com.br/RQASrq5">Comprar R$ 47</a>
+      <a class="button button-primary js-checkout" href="https://pay.kiwify.com.br/RQASrq5" data-checkout-source="sticky">Comprar R$ 47</a>
     </aside>
 
     <footer class="site-footer">

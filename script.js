@@ -1,4 +1,5 @@
 const CHECKOUT_URL = "https://pay.kiwify.com.br/RQASrq5";
+const BUY_CLICK_ENDPOINT = "/api/buy-click";
 const DEADLINE = new Date("2026-05-29T23:59:59-03:00");
 const META_PIXEL_ID = "2506439286493521";
 const MARKETING_CONSENT_KEY = "irIaMarketingConsent";
@@ -30,6 +31,49 @@ const clearMarketingConsent = () => {
 };
 
 const checkoutLinks = document.querySelectorAll(".js-checkout");
+
+function getAttributionParams() {
+  const attribution = {};
+  const params = new URLSearchParams(window.location.search);
+
+  params.forEach((value, key) => {
+    const normalizedKey = key.toLowerCase();
+    if (normalizedKey.startsWith("utm_") || normalizedKey === "fbclid") {
+      attribution[key] = value;
+    }
+  });
+
+  return attribution;
+}
+
+function buildBuyClickPayload(link) {
+  return {
+    checkoutUrl: CHECKOUT_URL,
+    pageUrl: window.location.href,
+    referrer: document.referrer || null,
+    source: link.dataset.checkoutSource || "unknown",
+    text: link.textContent.trim().replace(/\s+/g, " "),
+    timestamp: new Date().toISOString(),
+    attribution: getAttributionParams(),
+  };
+}
+
+function notifyBuyClick(link) {
+  const payload = JSON.stringify(buildBuyClickPayload(link));
+
+  if (navigator.sendBeacon) {
+    const sent = navigator.sendBeacon(BUY_CLICK_ENDPOINT, new Blob([payload], { type: "application/json" }));
+    if (sent) return;
+  }
+
+  fetch(BUY_CLICK_ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: payload,
+    keepalive: true,
+  }).catch(() => {});
+}
+
 checkoutLinks.forEach((link) => {
   link.setAttribute("href", CHECKOUT_URL);
   link.setAttribute("rel", "noopener");
@@ -37,7 +81,11 @@ checkoutLinks.forEach((link) => {
     const isPlainLeftClick =
       event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
 
-    if (!isPlainLeftClick || typeof window.fbq !== "function") return;
+    if (!isPlainLeftClick) return;
+
+    notifyBuyClick(link);
+
+    if (typeof window.fbq !== "function") return;
 
     event.preventDefault();
     window.fbq("track", "InitiateCheckout", {

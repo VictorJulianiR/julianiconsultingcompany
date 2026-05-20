@@ -932,7 +932,7 @@ h3 {
 
 .included-list,
 .fit-list,
-.not-for ul {
+.also-for ul {
   margin: 1rem 0 0;
   padding: 0;
   list-style: none;
@@ -940,7 +940,7 @@ h3 {
 
 .included-list li,
 .fit-list li,
-.not-for li {
+.also-for li {
   padding: 0.78rem 0;
   border-bottom: 1px solid var(--line);
   color: var(--muted);
@@ -986,7 +986,7 @@ h3 {
 }
 
 .urgency-card,
-.not-for {
+.also-for {
   padding: 1.2rem;
   border-radius: 12px;
   background: var(--navy);
@@ -1010,19 +1010,19 @@ h3 {
   line-height: 1;
 }
 
-.not-for .eyebrow {
+.also-for .eyebrow {
   color: var(--gold);
 }
 
-.not-for li {
+.also-for li {
   border-color: oklch(100% 0.01 88 / 0.16);
   color: oklch(90% 0.02 88);
 }
 
-.not-for li::before {
-  content: "×";
+.also-for li::before {
+  content: "✓";
   margin-right: 0.55rem;
-  color: var(--gold);
+  color: var(--green);
   font-weight: 950;
 }
 
