@@ -6,13 +6,13 @@ The homepage is **static by design** — `index.html`, `styles.css`, `script.js`
 
 ## Hero
 
-The hero is an **interactive ASCII / HyperFrames animation** built with native CSS + Canvas (no libraries):
+The hero is a native Canvas **ASCII identity sequence** with no video or animation dependency. A 128 × 72 glyph field maps to a 1280 × 720 composition: the field and the wordmark are rendered from the same characters.
 
-- **Layer A — iridescent field:** an animated blue → violet → gold gradient.
-- **Layer B — ASCII glyph canvas:** a drifting field of ASCII glyphs, hue-sampled from the iridescent field, that brighten and ripple near the pointer.
-- **Layer C — morphing wordmark:** real text that starts as **"JCC" at 72px**, spins on the Z axis, then morphs into **"Juliani Consulting Company"** with a per-letter reveal. Click/tap to replay; the pointer tilts it in 3D.
+- **Iridescent depth field:** blue, violet, and gold ASCII glyphs form the moving background.
+- **Edge-on transition:** an oversized `JCC` narrows to a vertical edge with a slight Z-roll, then swaps at that edge.
+- **Full identity:** `Juliani / Consulting / Company` emerges from the opposite side as three lines of white ASCII glyphs.
 
-The **Signal / Structure / Edge map** buttons switch the Canvas glyph charset. Honors `prefers-reduced-motion` (lands statically on the full name, no spin or drift).
+The motion runs once on load and can be replayed. It honors `prefers-reduced-motion` by showing the final full identity without the transition.
 
 ## Language (PT / EN)
 

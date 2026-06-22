@@ -61,8 +61,8 @@
       <section class="hero" id="top" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow" data-i18n="hero.eyebrow">JCC / Independent software consultancy</p>
-          <h1 id="hero-title" data-i18n-html="hero.title">Build the hard part<br /><span>before it hardens.</span></h1>
-          <p class="hero-lede" data-i18n="hero.lede">Juliani Consulting Company works with teams that need decisive software: AI that runs inside the business, products that can carry a market, and infrastructure that deserves to be trusted.</p>
+          <h1 id="hero-title" data-i18n-html="hero.title">The problem looks technical.<br /><span>Until it becomes operational.</span></h1>
+          <p class="hero-lede" data-i18n="hero.lede">Juliani Consulting Company works on the decision that determines how product, operations, and risk behave after delivery.</p>
           <div class="hero-actions">
             <a class="button button-primary" data-contact-link data-buy-source="hero" href="https://wa.me/5521999913363"><span data-i18n="hero.ctaPrimary">Bring the difficult problem</span> <span aria-hidden="true">↗</span></a>
             <button class="button button-quiet" type="button" data-scroll-to="signal-lab"><span data-i18n="hero.ctaSecondary">Map it first</span> <span aria-hidden="true">↓</span></button>
@@ -77,28 +77,17 @@
         <div class="hero-machine" data-machine aria-label="Interactive JCC identity animation">
           <div class="machine-topline"><span data-i18n="machine.signal">LIVE IDENTITY SIGNAL</span><span data-machine-state>BOOTING</span></div>
           <div class="ascii-shell">
-            <!-- Layer A: iridescent field -->
-            <div class="iridescent-field" aria-hidden="true"></div>
-            <!-- Layer B: ASCII glyph canvas -->
+            <!-- The field and the lettering are drawn together as ASCII glyphs. -->
             <canvas class="ascii-canvas" data-ascii-canvas aria-hidden="true"></canvas>
-            <!-- Layer C: morphing wordmark -->
-            <div class="wordmark-stage" data-wordmark-stage>
-              <button type="button" class="morph-wordmark" data-morph-wordmark aria-label="Replay identity animation">
-                <span class="morph-jcc" data-morph-jcc aria-hidden="true">JCC</span>
-                <span class="morph-full" data-morph-full></span>
-              </button>
+          </div>
+          <div class="machine-controls">
+            <span class="machine-control-label">RENDER</span>
+            <div class="ascii-mode-picker" role="group" aria-label="ASCII renderer controls">
+              <button type="button" data-ascii-mode="signal" aria-pressed="true" data-i18n="machine.modeSignal">Signal</button>
+              <button type="button" data-ascii-mode="structure" aria-pressed="false" data-i18n="machine.modeStructure">Structure</button>
+              <button type="button" data-ascii-mode="edge" aria-pressed="false" data-i18n="machine.modeEdge">Edge map</button>
             </div>
-          </div>
-          <div class="identity-caption" aria-live="polite">
-            <span data-ident-line="0">Juliani</span>
-            <span data-ident-line="1">Consulting</span>
-            <span data-ident-line="2">Company</span>
-          </div>
-          <div class="machine-controls" role="group" aria-label="ASCII renderer controls">
-            <button type="button" data-ascii-mode="signal" aria-pressed="true" data-i18n="machine.modeSignal">Signal</button>
-            <button type="button" data-ascii-mode="structure" aria-pressed="false" data-i18n="machine.modeStructure">Structure</button>
-            <button type="button" data-ascii-mode="edge" aria-pressed="false" data-i18n="machine.modeEdge">Edge map</button>
-            <span data-i18n="machine.hint">Move your pointer across the field</span>
+            <span class="machine-hint" data-i18n="machine.hint">Move your pointer across the field</span>
           </div>
         </div>
       </section>
@@ -111,7 +100,7 @@
       <section class="capabilities" id="capabilities" aria-labelledby="capabilities-title">
         <div class="section-intro">
           <p class="eyebrow" data-i18n="capabilities.eyebrow">What can be put in motion</p>
-          <h2 id="capabilities-title" data-i18n="capabilities.title">The work is broad.<br />The standard is specific.</h2>
+          <h2 id="capabilities-title" data-i18n-html="capabilities.title">What changes the business<br />needs a real system.</h2>
           <p data-i18n="capabilities.lede">Choose a field. The ledger shows the practical outcome, not a list of fashionable nouns.</p>
         </div>
 

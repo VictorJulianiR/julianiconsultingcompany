@@ -18,9 +18,9 @@ const content = {
     "nav.signalLab": "Signal Lab",
     "nav.contact": "Start a conversation",
     "hero.eyebrow": "JCC / Independent software consultancy",
-    "hero.title": "Build the hard part<br /><span>before it hardens.</span>",
-    "hero.lede": "Juliani Consulting Company works with teams that need decisive software: AI that runs inside the business, products that can carry a market, and infrastructure that deserves to be trusted.",
-    "hero.ctaPrimary": "Bring the difficult problem",
+    "hero.title": "The problem looks technical.<br /><span>Until it becomes operational.</span>",
+    "hero.lede": "Juliani Consulting Company works on the decision that determines how product, operations, and risk behave after delivery.",
+    "hero.ctaPrimary": "Map the decision",
     "hero.ctaSecondary": "Map it first",
     "hero.proof1": "International",
     "hero.proof2": "Senior-led",
@@ -30,16 +30,17 @@ const content = {
     "machine.modeStructure": "Structure",
     "machine.modeEdge": "Edge map",
     "machine.hint": "Move your pointer across the field",
+    "machine.replay": "Replay ident",
     "statement.body": "Most software risk is created before the first sprint. We enter where the architecture, the model, the operating reality, and the decision-maker have stopped agreeing.",
     "statement.tag": "does not sell hours without a point of view.",
     "capabilities.eyebrow": "What can be put in motion",
-    "capabilities.title": "The work is broad.<br />The standard is specific.",
-    "capabilities.lede": "Choose a field. The ledger shows the practical outcome, not a list of fashionable nouns.",
-    "cap.ai.label": "AI systems &amp; automation",
-    "cap.saas.label": "SaaS &amp; internal platforms",
+    "capabilities.title": "The work begins<br />where choices jam the system.",
+    "capabilities.lede": "Choose where the pressure is. The work starts with a constraint, not a catalogue of capabilities.",
+    "cap.ai.label": "AI systems & automation",
+    "cap.saas.label": "SaaS & internal platforms",
     "cap.chat.label": "Conversational business systems",
-    "cap.security.label": "Security architecture &amp; hardening",
-    "cap.data.label": "Data, analytics &amp; decision systems",
+    "cap.security.label": "Security architecture & hardening",
+    "cap.data.label": "Data, analytics & decision systems",
     "cap.special.label": "The thing nobody owns yet",
     "cap.detailContact": "Discuss this work",
     "approach.eyebrow": "How the work holds up",
@@ -82,9 +83,9 @@ const content = {
     "nav.signalLab": "Signal Lab",
     "nav.contact": "Iniciar conversa",
     "hero.eyebrow": "JCC / Consultoria de software independente",
-    "hero.title": "Construa a parte difícil<br /><span>antes dela endurecer.</span>",
-    "hero.lede": "A Juliani Consulting Company trabalha com times que precisam de software decisivo: IA que roda dentro do negócio, produtos que sustentam um mercado e infraestrutura que merece confiança.",
-    "hero.ctaPrimary": "Traga o problema difícil",
+    "hero.title": "O problema parece técnico.<br /><span>Até virar operacional.</span>",
+    "hero.lede": "A Juliani Consulting Company trabalha na decisão que determina como produto, operação e risco se comportam depois da entrega.",
+    "hero.ctaPrimary": "Mapear a decisão",
     "hero.ctaSecondary": "Mapear primeiro",
     "hero.proof1": "Internacional",
     "hero.proof2": "Liderança sênior",
@@ -94,16 +95,17 @@ const content = {
     "machine.modeStructure": "Estrutura",
     "machine.modeEdge": "Mapa de borda",
     "machine.hint": "Mova o ponteiro pelo campo",
+    "machine.replay": "Repetir ident",
     "statement.body": "A maior parte do risco de software é criada antes da primeira sprint. Entramos onde a arquitetura, o modelo, a realidade operacional e quem decide deixaram de concordar.",
     "statement.tag": "não vende horas sem um ponto de vista.",
     "capabilities.eyebrow": "O que pode ser colocado em movimento",
-    "capabilities.title": "O trabalho é amplo.<br />O padrão é específico.",
-    "capabilities.lede": "Escolha uma área. O balanço mostra o resultado prático, não uma lista de substantivos da moda.",
-    "cap.ai.label": "Sistemas de IA &amp; automação",
-    "cap.saas.label": "SaaS &amp; plataformas internas",
+    "capabilities.title": "O trabalho começa<br />onde as escolhas travam o sistema.",
+    "capabilities.lede": "Escolha onde está a pressão. O trabalho começa pela restrição, não por um catálogo de capacidades.",
+    "cap.ai.label": "Sistemas de IA & automação",
+    "cap.saas.label": "SaaS & plataformas internas",
     "cap.chat.label": "Sistemas conversacionais",
-    "cap.security.label": "Arquitetura de segurança &amp; hardening",
-    "cap.data.label": "Dados, analytics &amp; decisão",
+    "cap.security.label": "Arquitetura de segurança & hardening",
+    "cap.data.label": "Dados, analytics & decisão",
     "cap.special.label": "O que ninguém ainda assume",
     "cap.detailContact": "Conversar sobre este trabalho",
     "approach.eyebrow": "Como o trabalho se sustenta",
@@ -637,6 +639,435 @@ const setupAsciiField = () => {
   }
 };
 
+/* ====================== HERO: ASCII IDENTITY SEQUENCE ====================== */
+
+const setupAsciiIdent = () => {
+  const canvas = document.querySelector("[data-ascii-canvas]");
+  const machine = document.querySelector("[data-machine]");
+  const replay = document.querySelector("[data-ascii-replay]");
+  const machineState = document.querySelector("[data-machine-state]");
+  if (!canvas || !machine) return;
+
+  const ctx = canvas.getContext("2d");
+  const mask = document.createElement("canvas");
+  const maskCtx = mask.getContext("2d", { willReadFrequently: true });
+  if (!ctx || !maskCtx) return;
+
+  const BACKGROUND_GLYPHS = " .,:;irsXA253hMHGS#9B&@";
+  const TEXT_GLYPHS = " .:-=+*#%@";
+  const animationLength = 2100;
+  let width = 1;
+  let height = 1;
+  let dpr = 1;
+  let cell = 8;
+  let cols = 1;
+  let rows = 1;
+  let startTime = performance.now();
+  let lastPaint = 0;
+  let raf = 0;
+  let visible = true;
+  let pointer = { x: -1, y: -1, active: false };
+
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+  const easeOut = (value) => 1 - (1 - value) ** 3;
+
+  const resize = () => {
+    const rect = canvas.getBoundingClientRect();
+    width = Math.max(1, Math.round(rect.width));
+    height = Math.max(1, Math.round(rect.height));
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    // A 128 x 72 grid at 1280 x 720 preserves the requested 720p ASCII cadence.
+    cell = width / 128;
+    cols = Math.max(48, Math.round(width / cell));
+    rows = Math.max(28, Math.round(height / cell));
+    mask.width = cols;
+    mask.height = rows;
+  };
+
+  const drawTextMask = (progress) => {
+    const firstName = progress < 0.5;
+    const localProgress = firstName
+      ? easeOut(progress / 0.5)
+      : easeOut((progress - 0.5) / 0.5);
+    const horizontalScale = firstName
+      ? Math.max(0.018, Math.cos(localProgress * Math.PI * 0.5))
+      : Math.max(0.018, 0.94 * Math.sin(localProgress * Math.PI * 0.5));
+    const roll = firstName
+      ? -0.1 * Math.sin(localProgress * Math.PI)
+      : 0.055 * (1 - localProgress);
+
+    maskCtx.clearRect(0, 0, cols, rows);
+    maskCtx.save();
+    maskCtx.translate(cols * 0.5, rows * 0.5);
+    maskCtx.rotate(roll);
+    maskCtx.transform(horizontalScale, -0.035 * Math.sin(localProgress * Math.PI), 0, 1, 0, 0);
+    maskCtx.fillStyle = "#fff";
+    maskCtx.textAlign = "center";
+    maskCtx.textBaseline = "middle";
+
+    if (firstName) {
+      const fontSize = Math.min(rows * 0.78, cols * 0.31);
+      maskCtx.font = `800 ${fontSize}px "Funnel Display", Arial, sans-serif`;
+      maskCtx.fillText("JCC", 0, 0);
+    } else {
+      const fontSize = Math.min(rows * 0.23, cols * 0.13);
+      const lineHeight = fontSize * 1.12;
+      maskCtx.font = `700 ${fontSize}px "Funnel Display", Arial, sans-serif`;
+      ["Juliani", "Consulting", "Company"].forEach((line, index) => {
+        maskCtx.fillText(line, 0, (index - 1) * lineHeight);
+      });
+    }
+
+    maskCtx.restore();
+    return maskCtx.getImageData(0, 0, cols, rows).data;
+  };
+
+  const hueAt = (u, v, time) => {
+    const drift = Math.sin(u * 7.4 - v * 3.1 + time * 0.00034)
+      + Math.cos(v * 8.7 + time * 0.00022)
+      + Math.sin((u + v) * 5.2 - time * 0.00017);
+    const blend = clamp((drift + 3) / 6);
+    if (blend < 0.46) return 218 + (282 - 218) * (blend / 0.46);
+    return (282 + (44 + 360 - 282) * ((blend - 0.46) / 0.54)) % 360;
+  };
+
+  const replayIdent = () => {
+    startTime = performance.now();
+    machineState && (machineState.textContent = "MORPHING");
+    if (!reducedMotion) start();
+    else render(startTime);
+  };
+
+  const render = (now) => {
+    const elapsed = now - startTime;
+    const progress = reducedMotion ? 1 : clamp(elapsed / animationLength);
+    const textPixels = drawTextMask(progress);
+    const time = reducedMotion ? 0 : now;
+    const pointerU = pointer.x / width;
+    const pointerV = pointer.y / height;
+
+    ctx.fillStyle = "hsl(225 34% 7%)";
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = `${Math.max(5.5, cell * 1.05)}px "JetBrains Mono", ui-monospace, monospace`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (let row = 0; row < rows; row += 1) {
+      for (let column = 0; column < cols; column += 1) {
+        const index = row * cols + column;
+        const u = (column + 0.5) / cols;
+        const v = (row + 0.5) / rows;
+        const x = (column + 0.5) * cell;
+        const y = (row + 0.5) * cell;
+        const phase = Math.sin(column * 0.37 + row * 0.21 + time * 0.0011)
+          + Math.cos(column * 0.11 - row * 0.43 - time * 0.0007);
+        const vortex = Math.sin(Math.hypot(u - 0.56, v - 0.46) * 18 - time * 0.0013);
+        const light = clamp(0.18 + (phase + 2) * 0.12 + (vortex + 1) * 0.08);
+        const hue = hueAt(u, v, time);
+        const textAlpha = textPixels[index * 4 + 3] / 255;
+        const pointerDistance = pointer.active ? Math.hypot(u - pointerU, v - pointerV) : 1;
+        const pointerLift = pointer.active ? clamp(1 - pointerDistance / 0.25) * 0.26 : 0;
+
+        if (textAlpha > 0.035) {
+          const glyphIndex = Math.min(TEXT_GLYPHS.length - 1, Math.ceil(textAlpha * (TEXT_GLYPHS.length - 1)));
+          const glyph = TEXT_GLYPHS[glyphIndex];
+          if (glyph !== " ") {
+            ctx.fillStyle = `hsla(${218 + textAlpha * 25}, 22%, ${78 + textAlpha * 20}%, ${0.78 + textAlpha * 0.22})`;
+            ctx.fillText(glyph, x, y);
+          }
+          continue;
+        }
+
+        const glyphIndex = Math.min(BACKGROUND_GLYPHS.length - 1, Math.floor((light + pointerLift) * (BACKGROUND_GLYPHS.length - 1)));
+        const glyph = BACKGROUND_GLYPHS[glyphIndex];
+        if (glyph === " ") continue;
+        ctx.fillStyle = `hsla(${hue}, 88%, ${38 + (light + pointerLift) * 36}%, ${0.22 + (light + pointerLift) * 0.67})`;
+        ctx.fillText(glyph, x, y);
+      }
+    }
+
+    if (progress >= 1 && machineState?.textContent !== "IDENTITY LOCKED") {
+      machineState.textContent = "IDENTITY LOCKED";
+    }
+  };
+
+  const frame = (now) => {
+    raf = 0;
+    if (!visible) return;
+    if (now - lastPaint >= 1000 / 30) {
+      render(now);
+      lastPaint = now;
+    }
+    raf = requestAnimationFrame(frame);
+  };
+
+  const start = () => {
+    if (reducedMotion || raf) return;
+    raf = requestAnimationFrame(frame);
+  };
+
+  const stop = () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+  };
+
+  const onPointerMove = (event) => {
+    const rect = canvas.getBoundingClientRect();
+    pointer = { x: event.clientX - rect.left, y: event.clientY - rect.top, active: true };
+  };
+
+  resize();
+  window.addEventListener("resize", () => {
+    resize();
+    render(performance.now());
+  }, { passive: true });
+  machine.addEventListener("pointermove", onPointerMove, { passive: true });
+  machine.addEventListener("pointerleave", () => { pointer.active = false; }, { passive: true });
+  replay?.addEventListener("click", replayIdent);
+
+  const observer = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) {
+      if (reducedMotion) render(performance.now());
+      else start();
+    } else {
+      stop();
+    }
+  }, { threshold: 0 });
+  observer.observe(machine);
+
+  document.fonts?.ready?.then(() => render(performance.now()));
+  window.setTimeout(replayIdent, reducedMotion ? 0 : 420);
+};
+
+/* ====================== HERO: LOOPING ASCII IDENTITY ====================== */
+
+const setupAsciiIdentityLoop = () => {
+  const canvas = document.querySelector("[data-ascii-canvas]");
+  const machine = document.querySelector("[data-machine]");
+  const replay = document.querySelector("[data-ascii-replay]");
+  const machineState = document.querySelector("[data-machine-state]");
+  if (!canvas || !machine) return;
+
+  const ctx = canvas.getContext("2d");
+  const mask = document.createElement("canvas");
+  const maskCtx = mask.getContext("2d", { willReadFrequently: true });
+  if (!ctx || !maskCtx) return;
+
+  const MODES = {
+    signal: { glyphs: " .,:;irsXA253hMHGS#9B&@", columns: 92 },
+    structure: { glyphs: " .:-=+*#%@", columns: 82 },
+    edge: { glyphs: " .,:;-=+*#%@", columns: 108 },
+  };
+  const TEXT_GLYPHS = " .:-=+*#%@";
+  const MORPH_MS = 1800;
+  const HOLD_MS = 900;
+  const LOOP_MS = MORPH_MS * 2 + HOLD_MS * 2;
+
+  let mode = "signal";
+  let width = 1;
+  let height = 1;
+  let dpr = 1;
+  let cell = 8;
+  let cols = 1;
+  let rows = 1;
+  let cycleStart = performance.now();
+  let lastPaint = 0;
+  let raf = 0;
+  let visible = true;
+  let pointer = { x: -1, y: -1, active: false };
+
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+  const ease = (value) => value < 0.5 ? 4 * value ** 3 : 1 - (-2 * value + 2) ** 3 / 2;
+  const falloff = (x, y, cx, cy, radius) => Math.exp(-((x - cx) ** 2 + (y - cy) ** 2) / radius);
+
+  const resize = () => {
+    const rect = canvas.getBoundingClientRect();
+    width = Math.max(1, Math.round(rect.width));
+    height = Math.max(1, Math.round(rect.height));
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = MODES[mode].columns;
+    rows = Math.max(28, Math.round(cols * height / width));
+    cell = width / cols;
+    mask.width = cols;
+    mask.height = rows;
+  };
+
+  const loopProgress = (now) => {
+    const phase = (now - cycleStart) % LOOP_MS;
+    if (phase < MORPH_MS) return ease(phase / MORPH_MS);
+    if (phase < MORPH_MS + HOLD_MS) return 1;
+    if (phase < MORPH_MS * 2 + HOLD_MS) return 1 - ease((phase - MORPH_MS - HOLD_MS) / MORPH_MS);
+    return 0;
+  };
+
+  const drawTextMask = (progress) => {
+    const jccVisible = progress < 0.5;
+    const local = jccVisible ? ease(progress / 0.5) : ease((progress - 0.5) / 0.5);
+    const horizontalScale = jccVisible
+      ? Math.max(0.022, Math.cos(local * Math.PI * 0.5))
+      : Math.max(0.022, 0.96 * Math.sin(local * Math.PI * 0.5));
+    const roll = jccVisible ? -0.095 * Math.sin(local * Math.PI) : 0.052 * (1 - local);
+
+    maskCtx.clearRect(0, 0, cols, rows);
+    maskCtx.save();
+    maskCtx.translate(cols * 0.5, rows * 0.5);
+    maskCtx.rotate(roll);
+    maskCtx.transform(horizontalScale, -0.045 * Math.sin(local * Math.PI), 0, 1, 0, 0);
+    maskCtx.fillStyle = "rgb(252 250 255)";
+    maskCtx.textAlign = "center";
+    maskCtx.textBaseline = "middle";
+
+    if (jccVisible) {
+      const fontSize = Math.min(rows * 0.86, cols * 0.35);
+      maskCtx.font = `800 ${fontSize}px "Funnel Display", Arial, sans-serif`;
+      maskCtx.fillText("JCC", 0, 0);
+    } else {
+      const fontSize = Math.min(rows * 0.285, cols * 0.16);
+      const lineHeight = fontSize * 1.05;
+      maskCtx.font = `750 ${fontSize}px "Funnel Display", Arial, sans-serif`;
+      ["Juliani", "Consulting", "Company"].forEach((line, index) => {
+        maskCtx.fillText(line, 0, (index - 1) * lineHeight);
+      });
+    }
+
+    maskCtx.restore();
+    return maskCtx.getImageData(0, 0, cols, rows).data;
+  };
+
+  const render = (now) => {
+    const progress = reducedMotion ? 1 : loopProgress(now);
+    const textPixels = drawTextMask(progress);
+    const time = reducedMotion ? 0 : now;
+    const modeDef = MODES[mode];
+    const pointerU = pointer.x / width;
+    const pointerV = pointer.y / height;
+
+    ctx.fillStyle = "hsl(229 50% 5%)";
+    ctx.fillRect(0, 0, width, height);
+    ctx.font = `${Math.max(6.8, cell * 1.14)}px "JetBrains Mono", ui-monospace, monospace`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    for (let row = 0; row < rows; row += 1) {
+      for (let column = 0; column < cols; column += 1) {
+        const index = row * cols + column;
+        const u = (column + 0.5) / cols;
+        const v = (row + 0.5) / rows;
+        const x = (column + 0.5) * cell;
+        const y = (row + 0.5) * cell;
+        const blue = falloff(u, v, 0.18 + Math.sin(time * 0.00029) * 0.11, 0.24 + Math.cos(time * 0.00023) * 0.12, 0.085);
+        const violet = falloff(u, v, 0.61 + Math.cos(time * 0.00021) * 0.14, 0.41 + Math.sin(time * 0.00031) * 0.16, 0.11);
+        const gold = falloff(u, v, 0.84 + Math.sin(time * 0.00025) * 0.1, 0.72 + Math.cos(time * 0.00018) * 0.12, 0.075);
+        const scan = Math.sin(u * 22 - v * 13 + time * 0.0018);
+        const ripple = Math.sin(Math.hypot(u - 0.48, v - 0.48) * 34 - time * 0.0022);
+        const dominant = Math.max(blue, violet, gold);
+        let hue = dominant === blue ? 218 : dominant === violet ? 286 : 64;
+        hue += 13 * Math.sin(time * 0.00045 + u * 4 - v * 3);
+        let energy = clamp(0.08 + blue * 0.72 + violet * 0.76 + gold * 0.8 + (scan + 1) * 0.09 + (ripple + 1) * 0.07);
+
+        if (mode === "structure") {
+          energy = clamp(0.1 + dominant * 0.86 + Math.abs(scan) * 0.32 + (row % 5 === 0 ? 0.18 : 0));
+        } else if (mode === "edge") {
+          const contour = Math.abs(Math.sin((blue * 1.5 + violet * 1.25 + gold * 1.7) * 19 + time * 0.0015));
+          energy = clamp(contour * 0.96 + dominant * 0.44);
+        }
+
+        const pointerDistance = pointer.active ? Math.hypot(u - pointerU, v - pointerV) : 1;
+        const pointerLift = pointer.active ? clamp(1 - pointerDistance / 0.22) * 0.38 : 0;
+        const textAlpha = textPixels[index * 4 + 3] / 255;
+
+        if (textAlpha > 0.03) {
+          const glyph = TEXT_GLYPHS[Math.min(TEXT_GLYPHS.length - 1, Math.ceil(textAlpha * (TEXT_GLYPHS.length - 1)))];
+          if (glyph !== " ") {
+            ctx.fillStyle = `hsla(${226 + textAlpha * 24}, 52%, ${78 + textAlpha * 20}%, ${0.82 + textAlpha * 0.18})`;
+            ctx.fillText(glyph, x, y);
+          }
+          continue;
+        }
+
+        const glyph = modeDef.glyphs[Math.min(modeDef.glyphs.length - 1, Math.floor((energy + pointerLift) * (modeDef.glyphs.length - 1)))];
+        if (glyph === " ") continue;
+        ctx.fillStyle = `hsla(${hue}, 96%, ${35 + (energy + pointerLift) * 42}%, ${0.18 + (energy + pointerLift) * 0.76})`;
+        ctx.fillText(glyph, x, y);
+      }
+    }
+
+    if (machineState) {
+      machineState.textContent = progress > 0.46 && progress < 0.54
+        ? "EDGE TRANSFER"
+        : `${mode.toUpperCase()} / LOOP`;
+    }
+  };
+
+  const frame = (now) => {
+    raf = 0;
+    if (!visible) return;
+    if (now - lastPaint >= 1000 / 30) {
+      render(now);
+      lastPaint = now;
+    }
+    raf = requestAnimationFrame(frame);
+  };
+
+  const start = () => {
+    if (!reducedMotion && !raf) raf = requestAnimationFrame(frame);
+  };
+
+  const stop = () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+  };
+
+  const replayIdent = () => {
+    cycleStart = performance.now();
+    render(cycleStart);
+    start();
+  };
+
+  resize();
+  window.addEventListener("resize", () => {
+    resize();
+    render(performance.now());
+  }, { passive: true });
+  machine.addEventListener("pointermove", (event) => {
+    const rect = canvas.getBoundingClientRect();
+    pointer = { x: event.clientX - rect.left, y: event.clientY - rect.top, active: true };
+  }, { passive: true });
+  machine.addEventListener("pointerleave", () => { pointer.active = false; }, { passive: true });
+  replay?.addEventListener("click", replayIdent);
+
+  document.querySelectorAll("[data-ascii-mode]").forEach((button) => {
+    button.addEventListener("click", () => {
+      mode = button.dataset.asciiMode in MODES ? button.dataset.asciiMode : "signal";
+      document.querySelectorAll("[data-ascii-mode]").forEach((node) => node.setAttribute("aria-pressed", String(node === button)));
+      resize();
+      render(performance.now());
+    });
+  });
+
+  const observer = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) {
+      if (reducedMotion) render(performance.now());
+      else start();
+    } else {
+      stop();
+    }
+  }, { threshold: 0 });
+  observer.observe(machine);
+
+  document.fonts?.ready?.then(() => render(performance.now()));
+  replayIdent();
+};
+
 /* ====================== CAPABILITIES ====================== */
 
 const setupCapabilities = () => {
@@ -757,8 +1188,7 @@ document.querySelectorAll("[data-scroll-to]").forEach((button) => {
 applyLocale(activeLocale);
 setContactLinks();
 wireBuyClicks();
-setupWordmark();
-setupAsciiField();
+setupAsciiIdentityLoop();
 setupCapabilities();
 setupSignalLab();
 resolveLocale(); // async edge confirmation, may refine locale post-load

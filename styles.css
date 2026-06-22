@@ -71,54 +71,48 @@ h1 span { color: var(--cinder); }
 .proof-line { display: flex; flex-wrap: wrap; gap: 0; margin-top: clamp(2.8rem, 5vw, 5.5rem); border-top: 1px solid var(--line-dark); color: var(--fog); font-size: .72rem; }
 .proof-line span { padding: .75rem 1.05rem .75rem 0; margin-right: 1.05rem; border-right: 1px solid var(--line-dark); }
 
-/* ===== Interactive ASCII / HyperFrames hero machine ===== */
-.hero-machine { position: relative; min-width: 0; align-self: stretch; display: grid; grid-template-rows: auto 1fr auto auto; padding: .9rem; border: 1px solid var(--line-dark); background: oklch(13% .026 259 / .68); box-shadow: 0 30px 100px oklch(5% .03 264 / .44); }
-.machine-topline, .machine-controls, .signal-output-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .64rem; font-weight: 730; letter-spacing: .11em; }
+/* ===== ASCII identity sequence ===== */
+.hero-machine { position: relative; min-width: 0; align-self: stretch; display: grid; grid-template-rows: auto 1fr; padding: .9rem; border: 1px solid var(--line-dark); background: oklch(13% .026 259 / .68); box-shadow: 0 30px 100px oklch(5% .03 264 / .44); }
+.machine-topline, .signal-output-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: .64rem; font-weight: 730; letter-spacing: .11em; }
 .machine-topline { padding: .15rem .2rem .8rem; color: var(--fog); }
 .machine-topline span:last-child, .signal-output-head span:last-child { color: var(--acid); }
 
-.ascii-shell { position: relative; min-height: 360px; overflow: hidden; background: var(--ink); isolation: isolate; }
+.ascii-shell { position: relative; aspect-ratio: 16 / 9; min-height: 0; overflow: hidden; background: var(--ink); isolation: isolate; }
+.ascii-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ascii-replay { position: absolute; z-index: 1; right: .75rem; bottom: .65rem; display: inline-flex; gap: .5rem; align-items: center; padding: .35rem .45rem; border: 1px solid oklch(90% .015 255 / .24); background: oklch(13% .026 259 / .76); color: oklch(93% .012 255 / .82); font-family: var(--mono); font-size: .58rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; transition: border-color 160ms var(--ease), color 160ms var(--ease), background-color 160ms var(--ease); }
+.ascii-replay:hover { border-color: var(--iris-gold); background: oklch(19% .035 277 / .88); color: var(--white); }
+.machine-controls { padding: .72rem .2rem .08rem; color: var(--fog); }
+.machine-controls button { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.machine-controls button:hover, .machine-controls button[aria-pressed="true"] { color: var(--iris-gold); }
+.machine-controls span { margin-left: auto; color: oklch(71% .03 265); letter-spacing: .02em; }
 
-/* Layer A — iridescent field (blue / violet / gold cycling) */
-.iridescent-field { position: absolute; inset: 0; z-index: 0; background: linear-gradient(120deg, var(--iris-blue), var(--iris-violet) 38%, var(--iris-gold) 70%, var(--iris-blue)); background-size: 320% 320%; filter: saturate(1.15) blur(8px); opacity: .55; mix-blend-mode: screen; animation: iridescentShift 16s var(--ease) infinite; }
-.iridescent-field::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, oklch(96% .01 255 / .08) 1px, transparent 0); background-size: 14px 14px; opacity: .5; }
-@keyframes iridescentShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* The ident is an optical specimen, not a feature card. */
+@media (min-width: 981px) {
+  .hero { grid-template-columns: minmax(290px, .48fr) minmax(650px, 1.52fr); gap: clamp(1.2rem, 3vw, 4.5rem); }
+  .hero-copy { align-self: end; padding-bottom: clamp(1.4rem, 5vh, 4.5rem); }
+  h1 { max-width: 8.4ch; font-size: clamp(3rem, 4.8vw, 5.85rem); line-height: .92; }
+  .hero-lede { max-width: 34ch; font-size: clamp(.96rem, 1.15vw, 1.08rem); }
+  .hero-machine { align-self: center; margin-right: clamp(-3rem, -2.8vw, -1rem); padding: 0; border: 0; background: transparent; box-shadow: none; }
+  .machine-topline { padding: 0 0 .55rem; }
+  .ascii-shell { border-top: 1px solid oklch(85% .04 265 / .38); border-bottom: 1px solid oklch(85% .04 265 / .38); box-shadow: 0 32px 110px oklch(7% .09 275 / .48); }
 }
 
-/* Layer B — ASCII glyph canvas */
-.ascii-canvas { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; mix-blend-mode: screen; }
+.machine-controls { display: grid; grid-template-columns: auto auto minmax(0, 1fr); align-items: center; gap: .8rem; padding: .65rem 0 0; border-top: 1px solid oklch(85% .04 265 / .22); color: oklch(67% .025 265); font-family: var(--mono); font-size: .6rem; font-weight: 700; letter-spacing: .09em; }
+.machine-control-label { color: oklch(76% .07 260); }
+.machine-controls .machine-control-label, .machine-controls .machine-hint { margin-left: 0; }
+.ascii-mode-picker { display: flex; gap: .72rem; }
+.machine-controls button { position: relative; padding: 0 0 .16rem; border: 0; border-bottom: 1px solid transparent; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; }
+.machine-controls button:hover { color: var(--white); }
+.machine-controls button[aria-pressed="true"] { border-bottom-color: var(--iris-gold); color: var(--white); }
+.machine-controls button[aria-pressed="true"]::before { content: "•"; margin-right: .34rem; color: var(--iris-gold); }
+.machine-hint { justify-self: end; margin: 0; color: oklch(62% .02 265); letter-spacing: .025em; }
 
-/* Layer C — morphing wordmark stage */
-.wordmark-stage { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; perspective: 900px; }
-.morph-wordmark { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 0; border: 0; background: none; color: var(--white); cursor: pointer; transform-style: preserve-3d; transition: transform 200ms var(--ease); }
-.morph-wordmark:focus-visible { outline: 3px solid var(--beam); outline-offset: 6px; }
-
-/* JCC glyph — starts at 72px, spins on Z axis */
-.morph-jcc { font-family: var(--display); font-size: 72px; font-weight: 800; letter-spacing: -.17em; line-height: 1; color: var(--white); text-shadow: 0 0 32px oklch(70% .16 248 / .55); transform: translateZ(0); }
-.morph-wordmark.is-spinning .morph-jcc { animation: jccSpin 900ms var(--ease) forwards; }
-@keyframes jccSpin {
-  0% { transform: rotateZ(0deg) scale(1); opacity: 1; }
-  60% { transform: rotateZ(180deg) scale(.82); opacity: .85; }
-  100% { transform: rotateZ(360deg) scale(.6); opacity: 0; }
+/* Let the ident dominate the fold instead of behaving like a supporting card. */
+@media (min-width: 981px) {
+  .hero { grid-template-columns: minmax(320px, .67fr) minmax(540px, 1.33fr); gap: clamp(1rem, 2.4vw, 3.2rem); }
+  .hero-machine { align-self: center; padding: .72rem; border-color: oklch(78% .06 265 / .36); background: oklch(11% .034 262 / .92); box-shadow: 0 36px 120px oklch(7% .08 275 / .55), 0 0 90px oklch(54% .15 285 / .14); }
+  h1 { max-width: 8.6ch; font-size: clamp(3.25rem, 5.45vw, 6.35rem); }
 }
-
-/* Full name — revealed as JCC exits */
-.morph-full { position: absolute; inset: 0; display: grid; place-items: center; padding: 0 1rem; font-family: var(--display); font-size: clamp(1.4rem, 3.2vw, 2.6rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.05; text-align: center; color: var(--white); opacity: 0; transform: scale(1.08); transition: opacity 700ms var(--ease), transform 700ms var(--ease); text-shadow: 0 0 28px oklch(60% .18 300 / .5); }
-.morph-wordmark.is-morphed .morph-full { opacity: 1; transform: scale(1); }
-.morph-full span { display: inline-block; opacity: 0; transform: translateY(12px) rotateZ(8deg); transition: opacity 360ms var(--ease), transform 360ms var(--ease); }
-.morph-wordmark.is-morphed .morph-full span { opacity: 1; transform: translateY(0) rotateZ(0); }
-
-.identity-caption { display: grid; padding: 1rem .25rem .55rem; color: var(--white); font-family: var(--display); font-size: clamp(1.15rem, 2.1vw, 1.85rem); font-weight: 570; letter-spacing: -.055em; line-height: .88; }
-.identity-caption span { display: block; width: fit-content; opacity: 0; transform: translateY(9px); transition: opacity 500ms var(--ease), transform 500ms var(--ease); }
-.identity-caption span:first-child { color: var(--cinder); }
-.identity-caption span.is-revealed { opacity: 1; transform: translateY(0); }
-.machine-controls { padding: .7rem .2rem .05rem; color: var(--fog); }
-.machine-controls button { padding: 0; border: 0; background: none; color: inherit; font-family: var(--body); font-size: inherit; font-weight: inherit; letter-spacing: inherit; }
-.machine-controls button:hover, .machine-controls button[aria-pressed="true"] { color: var(--beam); }
-.machine-controls span { margin-left: auto; color: oklch(70% .018 258); letter-spacing: .02em; }
 
 /* ============================ STATEMENT ============================ */
 .statement { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(220px, .55fr); gap: clamp(2rem, 8vw, 10rem); max-width: var(--max); margin: 0 auto; padding: clamp(6rem, 13vw, 13rem) clamp(1.2rem, 4vw, 3.4rem); border-bottom: 1px solid var(--line-dark); }
@@ -206,7 +200,7 @@ h2 { margin-bottom: 0; font-size: clamp(2.7rem, 5.2vw, 6rem); font-weight: 550; 
   .site-header nav { display: none; }
   .header-right { gap: .8rem; }
   .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero-machine { min-height: min(70vw, 610px); }
+  .hero-machine { min-height: 0; }
   .statement, .section-intro, .lab-top { grid-template-columns: 1fr; }
   .statement > p { max-width: 24ch; }
   .capability-layout { grid-template-columns: 1fr; }
@@ -225,9 +219,9 @@ h2 { margin-bottom: 0; font-size: clamp(2.7rem, 5.2vw, 6rem); font-weight: 550; 
   .header-contact { font-size: .72rem; }
   .hero { padding: 6rem 1rem 3rem; }
   h1 { font-size: clamp(3.35rem, 15vw, 5rem); }
-  .hero-machine { min-height: 450px; margin-inline: -.2rem; }
-  .machine-controls { flex-wrap: wrap; gap: .6rem 1rem; }
-  .machine-controls span { width: 100%; margin-left: 0; }
+  .hero-machine { min-height: 0; margin-inline: -.2rem; }
+  .machine-controls { flex-wrap: wrap; gap: .55rem 1rem; }
+  .machine-hint { grid-column: 1 / -1; justify-self: start; width: auto; margin-left: 0; }
   .statement, .capabilities, .signal-lab { padding-inline: 1rem; }
   .approach, .closing { padding-inline: 1rem; }
   .approach-sequence { grid-template-columns: 1fr; }
@@ -239,17 +233,10 @@ h2 { margin-bottom: 0; font-size: clamp(2.7rem, 5.2vw, 6rem); font-weight: 550; 
   .site-footer { grid-template-columns: 1fr; gap: .9rem; padding: 1.8rem 1rem; }
   .site-footer p { text-align: left; }
   .site-footer > a:last-child { justify-self: start; }
-  /* JCC starting size scales down on small screens but keeps the brief's intent */
-  .morph-jcc { font-size: clamp(56px, 18vw, 72px); }
 }
 
 /* ============================ MOTION AWARENESS ============================ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-  /* Hero: land statically on the full name, skip the Z-spin and iridescent drift */
-  .iridescent-field { animation: none; }
-  .morph-jcc { opacity: 0; }
-  .morph-wordmark.is-morphed .morph-full,
-  .morph-full { opacity: 1; transform: none; }
-  .morph-full span { opacity: 1; transform: none; }
+  .ascii-replay { transition: none; }
 }
