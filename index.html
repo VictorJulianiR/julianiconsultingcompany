@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Juliani Consulting Company | Build the hard part</title>
-    <meta name="description" content="Juliani Consulting Company builds AI systems, SaaS products, secure platforms, and the difficult software work that needs to work in the real world." />
+    <title>Juliani Consulting Company</title>
+    <meta name="description" content="Juliani Consulting Company designs and builds AI systems, software products, and infrastructure for work that has to hold up in production." />
     <meta property="og:title" content="Juliani Consulting Company" />
-    <meta property="og:description" content="Software consulting for systems that must earn trust under pressure." />
+    <meta property="og:description" content="Software for the part that has to work." />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#111a2b" />
+    <meta name="theme-color" content="#070912" />
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,162 +43,148 @@
         <span class="wordmark-j">J</span><span>CC</span>
       </a>
       <nav aria-label="Primary navigation">
-        <a href="#capabilities" data-i18n="nav.capabilities">Capabilities</a>
-        <a href="#approach" data-i18n="nav.approach">Approach</a>
+        <a href="#work" data-i18n="nav.work">Work</a>
         <a href="#signal-lab" data-i18n="nav.signalLab">Signal Lab</a>
       </nav>
       <div class="header-right">
         <div class="lang-toggle" role="group" aria-label="Language">
-          <a href="/api/locale?set=pt" data-locale-option="pt" data-buy-source="nav-lang-pt" aria-label="Português">PT</a>
+          <a href="/api/locale?set=pt" data-locale-option="pt" aria-label="Português">PT</a>
           <span aria-hidden="true">/</span>
-          <a href="/api/locale?set=en" data-locale-option="en" data-buy-source="nav-lang-en" aria-label="English">EN</a>
+          <a href="/api/locale?set=en" data-locale-option="en" aria-label="English">EN</a>
         </div>
-        <a class="header-contact" data-contact-link data-buy-source="nav" href="https://wa.me/5521999913363"><span data-i18n="nav.contact">Start a conversation</span> <span aria-hidden="true">↗</span></a>
+        <a class="header-contact" data-contact-link data-buy-source="nav" href="https://wa.me/5521999913363"><span data-i18n="nav.contact">Start a project</span> <span aria-hidden="true">↗</span></a>
       </div>
     </header>
 
     <main id="main">
-      <section class="hero" id="top" aria-labelledby="hero-title">
-        <div class="hero-copy">
-          <p class="eyebrow" data-i18n="hero.eyebrow">JCC / Independent software consultancy</p>
-          <h1 id="hero-title" data-i18n-html="hero.title">The problem looks technical.<br /><span>Until it becomes operational.</span></h1>
-          <p class="hero-lede" data-i18n="hero.lede">Juliani Consulting Company works on the decision that determines how product, operations, and risk behave after delivery.</p>
-          <div class="hero-actions">
-            <a class="button button-primary" data-contact-link data-buy-source="hero" href="https://wa.me/5521999913363"><span data-i18n="hero.ctaPrimary">Bring the difficult problem</span> <span aria-hidden="true">↗</span></a>
-            <button class="button button-quiet" type="button" data-scroll-to="signal-lab"><span data-i18n="hero.ctaSecondary">Map it first</span> <span aria-hidden="true">↓</span></button>
-          </div>
-          <div class="proof-line" aria-label="Working principles">
-            <span data-i18n="hero.proof1">International</span>
-            <span data-i18n="hero.proof2">Senior-led</span>
-            <span data-i18n="hero.proof3">Built to transfer</span>
-          </div>
-        </div>
+      <!-- ============ HERO: the canvas IS the page ============ -->
+      <section class="hero" id="top" data-machine aria-label="Juliani Consulting Company identity">
+        <canvas class="hero-canvas" data-ascii-canvas aria-hidden="true"></canvas>
 
-        <div class="hero-machine" data-machine aria-label="Interactive JCC identity animation">
-          <div class="machine-topline"><span data-i18n="machine.signal">LIVE IDENTITY SIGNAL</span><span data-machine-state>BOOTING</span></div>
-          <div class="ascii-shell">
-            <!-- The field and the lettering are drawn together as ASCII glyphs. -->
-            <canvas class="ascii-canvas" data-ascii-canvas aria-hidden="true"></canvas>
+        <div class="hero-overlay">
+          <div class="hero-status">
+            <span data-i18n="machine.signal">LIVE IDENTITY SIGNAL</span>
+            <span data-machine-state>BOOTING</span>
           </div>
-          <div class="machine-controls">
-            <span class="machine-control-label">RENDER</span>
-            <div class="ascii-mode-picker" role="group" aria-label="ASCII renderer controls">
-              <button type="button" data-ascii-mode="signal" aria-pressed="true" data-i18n="machine.modeSignal">Signal</button>
-              <button type="button" data-ascii-mode="structure" aria-pressed="false" data-i18n="machine.modeStructure">Structure</button>
-              <button type="button" data-ascii-mode="edge" aria-pressed="false" data-i18n="machine.modeEdge">Edge map</button>
+
+          <div class="hero-copy">
+            <p class="hero-eyebrow" data-i18n="hero.eyebrow">Juliani Consulting Company</p>
+            <p class="hero-lede" data-i18n="hero.lede">We design and build AI systems, software products, and infrastructure for work that has to hold up in production.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" data-contact-link data-buy-source="hero" href="https://wa.me/5521999913363"><span data-i18n="hero.cta">Start a project</span> <span aria-hidden="true">↗</span></a>
+              <a class="button button-ghost" href="#work"><span data-i18n="hero.ctaSecondary">See the work</span> <span aria-hidden="true">↓</span></a>
             </div>
-            <span class="machine-hint" data-i18n="machine.hint">Move your pointer across the field</span>
+          </div>
+
+          <div class="hero-controls" role="group" aria-label="Renderer controls">
+            <button type="button" data-ascii-mode="signal" aria-pressed="true" data-i18n="machine.modeSignal">Signal</button>
+            <button type="button" data-ascii-mode="structure" aria-pressed="false" data-i18n="machine.modeStructure">Structure</button>
+            <button type="button" data-ascii-mode="edge" aria-pressed="false" data-i18n="machine.modeEdge">Edge</button>
+            <button type="button" class="replay" data-ascii-replay data-i18n="machine.replay">Replay ↺</button>
           </div>
         </div>
       </section>
 
-      <section class="statement" aria-label="Company proposition">
-        <p data-i18n="statement.body">Most software risk is created before the first sprint. We enter where the architecture, the model, the operating reality, and the decision-maker have stopped agreeing.</p>
-        <div><span>JCC</span><span data-i18n="statement.tag">does not sell hours without a point of view.</span></div>
-      </section>
+      <!-- ============ WORK: four concrete plates ============ -->
+      <section class="work" id="work" aria-labelledby="work-title">
+        <header class="section-head">
+          <p class="eyebrow" data-i18n="work.eyebrow">Work</p>
+          <h2 id="work-title" data-i18n="work.title">Four ways the work takes shape.</h2>
+        </header>
 
-      <section class="capabilities" id="capabilities" aria-labelledby="capabilities-title">
-        <div class="section-intro">
-          <p class="eyebrow" data-i18n="capabilities.eyebrow">What can be put in motion</p>
-          <h2 id="capabilities-title" data-i18n-html="capabilities.title">What changes the business<br />needs a real system.</h2>
-          <p data-i18n="capabilities.lede">Choose a field. The ledger shows the practical outcome, not a list of fashionable nouns.</p>
-        </div>
-
-        <div class="capability-layout">
-          <div class="capability-list" role="tablist" aria-label="Consulting capabilities">
-            <button role="tab" aria-selected="true" aria-controls="capability-detail" id="cap-ai" data-capability="ai"><span>01</span><strong data-i18n="cap.ai.label">AI systems &amp; automation</strong><i>↓</i></button>
-            <button role="tab" aria-selected="false" aria-controls="capability-detail" id="cap-saas" data-capability="saas"><span>02</span><strong data-i18n="cap.saas.label">SaaS &amp; internal platforms</strong><i>↓</i></button>
-            <button role="tab" aria-selected="false" aria-controls="capability-detail" id="cap-chat" data-capability="chat"><span>03</span><strong data-i18n="cap.chat.label">Conversational business systems</strong><i>↓</i></button>
-            <button role="tab" aria-selected="false" aria-controls="capability-detail" id="cap-security" data-capability="security"><span>04</span><strong data-i18n="cap.security.label">Security architecture &amp; hardening</strong><i>↓</i></button>
-            <button role="tab" aria-selected="false" aria-controls="capability-detail" id="cap-data" data-capability="data"><span>05</span><strong data-i18n="cap.data.label">Data, analytics &amp; decision systems</strong><i>↓</i></button>
-            <button role="tab" aria-selected="false" aria-controls="capability-detail" id="cap-special" data-capability="special"><span>06</span><strong data-i18n="cap.special.label">The thing nobody owns yet</strong><i>↓</i></button>
-          </div>
-          <aside class="capability-detail" id="capability-detail" role="tabpanel" aria-labelledby="cap-ai" tabindex="0">
-            <p class="detail-code" data-detail-code>CAPABILITY / 01</p>
-            <h3 data-detail-title>AI systems that belong to the operation.</h3>
-            <p data-detail-copy>Turn scattered expertise, documents, decisions, and workflows into AI systems with defined boundaries, human escalation, observability, and a reason to exist after the demo.</p>
-            <ul data-detail-list>
-              <li>Knowledge and retrieval systems</li>
-              <li>Agent workflows with controlled actions</li>
-              <li>Automation that can be audited and improved</li>
-            </ul>
-            <a data-contact-link data-buy-source="capability" class="detail-contact" href="https://wa.me/5521999913363"><span data-i18n="cap.detailContact">Discuss this work</span> <span aria-hidden="true">↗</span></a>
-          </aside>
-        </div>
-      </section>
-
-      <section class="approach" id="approach" aria-labelledby="approach-title">
-        <div class="approach-heading">
-          <p class="eyebrow" data-i18n="approach.eyebrow">How the work holds up</p>
-          <h2 id="approach-title" data-i18n="approach.title">A consulting engagement should leave the system more legible than it found it.</h2>
-        </div>
-        <ol class="approach-sequence">
-          <li><span>01</span><div><h3 data-i18n="approach.step1.h">Find the load-bearing problem</h3><p data-i18n="approach.step1.p">Separate the visible request from the constraint that is actually making the business slow, exposed, or unable to move.</p></div></li>
-          <li><span>02</span><div><h3 data-i18n="approach.step2.h">Make the smallest serious system</h3><p data-i18n="approach.step2.p">Set architecture, interfaces, controls, and delivery slices around the decision that needs to become true first.</p></div></li>
-          <li><span>03</span><div><h3 data-i18n="approach.step3.h">Put it under real pressure</h3><p data-i18n="approach.step3.p">Test the behavior, failure modes, security posture, and team hand-off against the conditions that matter after launch.</p></div></li>
-          <li><span>04</span><div><h3 data-i18n="approach.step4.h">Leave the next move obvious</h3><p data-i18n="approach.step4.p">Document the choices, transfer the capability, and make the next investment easier to judge.</p></div></li>
+        <ol class="work-list">
+          <li class="work-plate">
+            <span class="work-num">01</span>
+            <div class="work-body">
+              <h3 data-i18n="work.1.name">AI Systems</h3>
+              <p class="work-def" data-i18n="work.1.def">Agents and automation with real boundaries.</p>
+              <p class="work-ship" data-i18n="work.1.ship">Ships running — with escalation, oversight, and a reason to exist past the demo.</p>
+            </div>
+            <a class="work-cta" data-contact-link data-buy-source="work-1" href="https://wa.me/5521999913363"><span data-i18n="work.cta">Start</span> <span aria-hidden="true">↗</span></a>
+          </li>
+          <li class="work-plate">
+            <span class="work-num">02</span>
+            <div class="work-body">
+              <h3 data-i18n="work.2.name">Products</h3>
+              <p class="work-def" data-i18n="work.2.def">SaaS and platforms built to carry customers.</p>
+              <p class="work-ship" data-i18n="work.2.ship">From architecture to the first release that has to work — and the model behind it.</p>
+            </div>
+            <a class="work-cta" data-contact-link data-buy-source="work-2" href="https://wa.me/5521999913363"><span data-i18n="work.cta">Start</span> <span aria-hidden="true">↗</span></a>
+          </li>
+          <li class="work-plate">
+            <span class="work-num">03</span>
+            <div class="work-body">
+              <h3 data-i18n="work.3.name">Security</h3>
+              <p class="work-def" data-i18n="work.3.def">Threat models and hardening for production.</p>
+              <p class="work-ship" data-i18n="work.3.ship">A review of what carries real exposure, turned into a plan a team can execute.</p>
+            </div>
+            <a class="work-cta" data-contact-link data-buy-source="work-3" href="https://wa.me/5521999913363"><span data-i18n="work.cta">Start</span> <span aria-hidden="true">↗</span></a>
+          </li>
+          <li class="work-plate">
+            <span class="work-num">04</span>
+            <div class="work-body">
+              <h3 data-i18n="work.4.name">Decision Systems</h3>
+              <p class="work-def" data-i18n="work.4.def">Data that ends in a decision.</p>
+              <p class="work-ship" data-i18n="work.4.ship">The flow and interface that turn uncertainty into a clear next move.</p>
+            </div>
+            <a class="work-cta" data-contact-link data-buy-source="work-4" href="https://wa.me/5521999913363"><span data-i18n="work.cta">Start</span> <span aria-hidden="true">↗</span></a>
+          </li>
         </ol>
       </section>
 
+      <!-- ============ SIGNAL LAB: three questions, one move ============ -->
       <section class="signal-lab" id="signal-lab" aria-labelledby="signal-title">
-        <div class="lab-top">
-          <div>
-            <p class="eyebrow" data-i18n="signal.eyebrow">Signal Lab / 90 seconds</p>
-            <h2 id="signal-title" data-i18n="signal.title">Give the problem a shape.</h2>
-          </div>
-          <p data-i18n="signal.lede">Not a lead form. A first technical position. Select the variables that are true now and get a sensible starting engagement to bring into a real conversation.</p>
-        </div>
+        <header class="section-head">
+          <p class="eyebrow" data-i18n="signal.eyebrow">Signal Lab</p>
+          <h2 id="signal-title" data-i18n="signal.title">Three questions. One starting point.</h2>
+          <p class="section-lede" data-i18n="signal.lede">Tell the instrument where the pressure is. It returns a concrete first move to bring into a real conversation.</p>
+        </header>
 
         <div class="lab-grid">
           <form class="signal-form" data-signal-form>
             <fieldset>
-              <legend data-i18n="signal.qChange">What needs to change?</legend>
-              <label><input type="radio" name="change" value="ai" checked /><span data-i18n="signal.change.ai">Expert work needs leverage</span></label>
-              <label><input type="radio" name="change" value="product" /><span data-i18n="signal.change.product">A product needs to become real</span></label>
-              <label><input type="radio" name="change" value="risk" /><span data-i18n="signal.change.risk">Risk is outrunning confidence</span></label>
+              <legend data-i18n="signal.q1">What needs to move?</legend>
+              <label><input type="radio" name="change" value="ai" checked /><span data-i18n="signal.a1.ai">AI leverage</span></label>
+              <label><input type="radio" name="change" value="product" /><span data-i18n="signal.a1.product">A real product</span></label>
+              <label><input type="radio" name="change" value="risk" /><span data-i18n="signal.a1.risk">Risk under control</span></label>
             </fieldset>
             <fieldset>
-              <legend data-i18n="signal.qPressure">Where is the pressure?</legend>
-              <label><input type="radio" name="pressure" value="revenue" checked /><span data-i18n="signal.pressure.revenue">Revenue or customer experience</span></label>
-              <label><input type="radio" name="pressure" value="operations" /><span data-i18n="signal.pressure.operations">Operations and internal throughput</span></label>
-              <label><input type="radio" name="pressure" value="trust" /><span data-i18n="signal.pressure.trust">Security, reliability, or compliance</span></label>
+              <legend data-i18n="signal.q2">Where is the pressure?</legend>
+              <label><input type="radio" name="pressure" value="revenue" checked /><span data-i18n="signal.a2.revenue">Revenue</span></label>
+              <label><input type="radio" name="pressure" value="operations" /><span data-i18n="signal.a2.operations">Operations</span></label>
+              <label><input type="radio" name="pressure" value="trust" /><span data-i18n="signal.a2.trust">Trust</span></label>
             </fieldset>
             <fieldset>
-              <legend data-i18n="signal.qHorizon">How soon must it move?</legend>
-              <label><input type="radio" name="horizon" value="weeks" checked /><span data-i18n="signal.horizon.weeks">Within weeks</span></label>
-              <label><input type="radio" name="horizon" value="quarter" /><span data-i18n="signal.horizon.quarter">This quarter</span></label>
-              <label><input type="radio" name="horizon" value="foundation" /><span data-i18n="signal.horizon.foundation">Set the foundation first</span></label>
+              <legend data-i18n="signal.q3">How soon?</legend>
+              <label><input type="radio" name="horizon" value="weeks" checked /><span data-i18n="signal.a3.weeks">Weeks</span></label>
+              <label><input type="radio" name="horizon" value="quarter" /><span data-i18n="signal.a3.quarter">This quarter</span></label>
+              <label><input type="radio" name="horizon" value="foundation" /><span data-i18n="signal.a3.foundation">Foundation first</span></label>
             </fieldset>
           </form>
 
           <div class="signal-output" data-signal-output aria-live="polite">
-            <div class="signal-output-head"><span data-i18n="signal.outputHead">WORKING POSITION</span><span data-signal-status>READY</span></div>
-            <p class="signal-type" data-signal-type>AI OPERATING SYSTEM</p>
-            <h3 data-signal-title>Start with a leverage map, then build one workflow that proves the operating model.</h3>
-            <p data-signal-copy>Useful when valuable judgment is trapped in people, inboxes, long documents, or manual hand-offs.</p>
-            <div class="signal-deliverables" data-signal-deliverables>
-              <span>Decision map</span><span>System boundary</span><span>One live workflow</span>
+            <div class="output-head"><span data-i18n="signal.outputHead">STARTING POSITION</span><span data-signal-status>READY</span></div>
+            <p class="output-type" data-signal-type>AI SYSTEM</p>
+            <h3 data-signal-title>Start with one workflow that proves the loop.</h3>
+            <p data-signal-copy>For when valuable work is stuck in people, inboxes, and manual steps.</p>
+            <p class="output-horizon" data-signal-horizon>Move in weeks — we scope a focused first build.</p>
+            <div class="output-deliverables" data-signal-deliverables>
+              <span>Boundary</span><span>Oversight</span><span>Live workflow</span>
             </div>
-            <div class="signal-actions">
-              <button type="button" class="button button-primary" data-copy-brief><span data-i18n="signal.copy">Copy this brief</span> <span aria-hidden="true">↗</span></button>
-              <a class="button button-quiet" data-contact-link data-buy-source="signal" href="https://wa.me/5521999913363"><span data-i18n="signal.send">Send it to JCC</span> <span aria-hidden="true">↗</span></a>
+            <div class="output-actions">
+              <a class="button button-primary" data-contact-link data-buy-source="signal" href="https://wa.me/5521999913363"><span data-i18n="signal.send">Send to JCC</span> <span aria-hidden="true">↗</span></a>
+              <button type="button" class="button button-ghost" data-copy-brief><span data-i18n="signal.copy">Copy</span></button>
             </div>
             <p class="copy-status" data-copy-status role="status"></p>
           </div>
         </div>
       </section>
-
-      <section class="closing" aria-labelledby="closing-title">
-        <p class="eyebrow">Juliani Consulting Company</p>
-        <h2 id="closing-title" data-i18n="closing.title">If it has to work outside the slide deck, bring it here.</h2>
-        <a class="closing-link" data-contact-link data-buy-source="closing" href="https://wa.me/5521999913363"><span data-i18n="closing.cta">Start with the context</span> <span aria-hidden="true">↗</span></a>
-      </section>
     </main>
 
     <footer class="site-footer">
       <a class="wordmark" href="#top" aria-label="Back to top"><span class="wordmark-j">J</span><span>CC</span></a>
-      <p><span data-i18n="footer.tagline">Juliani Consulting Company. Software consulting, internationally.</span></p>
-      <a data-contact-link data-buy-source="footer" href="https://wa.me/5521999913363"><span data-i18n="footer.whatsapp">WhatsApp</span> <span aria-hidden="true">↗</span></a>
+      <p class="footer-line"><span data-i18n="footer.tagline">Juliani Consulting Company — software, internationally.</span></p>
+      <a class="footer-contact" data-contact-link data-buy-source="footer" href="https://wa.me/5521999913363"><span data-i18n="footer.cta">Start a project</span> <span aria-hidden="true">↗</span></a>
     </footer>
 
     <script type="module" src="script.js"></script>
