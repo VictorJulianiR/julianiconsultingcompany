@@ -46,17 +46,18 @@ button { cursor: pointer; }
 html[data-locale="pt"] .lang-toggle a[data-locale-option="pt"],
 html[data-locale="en"] .lang-toggle a[data-locale-option="en"] { color: var(--white); border-bottom-color: var(--cinder); cursor: default; }
 
-/* ============================ HERO STAGE (animation, full-bleed) ============================ */
-.hero-stage { position: relative; width: 100%; height: 70svh; min-height: 420px; overflow: hidden; }
+/* ============================ HERO STAGE (animation, full-bleed; controls below) ============================ */
+.hero-stage { position: relative; width: 100%; max-width: var(--max); margin: 0 auto; padding: clamp(5rem, 10vh, 6.5rem) clamp(1.2rem, 4vw, 3.4rem) 0; }
+.stage-canvas-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 1px solid var(--line-soft); }
 .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-.stage-overlay { position: absolute; inset: 0; z-index: 2; max-width: var(--max); margin: 0 auto; padding: clamp(5.5rem, 11vh, 7rem) clamp(1.2rem, 4vw, 3.4rem) 1.5rem; display: grid; grid-template-rows: auto 1fr auto; pointer-events: none; }
-.stage-overlay .stage-status { display: flex; justify-content: space-between; gap: 1rem; font-family: var(--mono); font-size: .62rem; font-weight: 700; letter-spacing: .14em; color: oklch(95% 0.01 255 / 0.7); text-shadow: 0 1px 8px oklch(3% 0.02 265 / 0.8); }
-.stage-overlay .stage-status span:last-child { color: var(--acid); }
-.stage-controls { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; font-family: var(--mono); font-size: .64rem; font-weight: 700; letter-spacing: .1em; color: oklch(92% 0.01 255 / 0.6); }
-.stage-controls button { pointer-events: auto; padding: .25rem .1rem; border: 0; border-bottom: 1px solid transparent; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; text-shadow: 0 1px 6px oklch(3% 0.02 265 / 0.8); transition: color 160ms var(--ease), border-color 160ms var(--ease); }
+.stage-status { position: absolute; top: .9rem; left: 1rem; right: 1rem; z-index: 2; display: flex; justify-content: space-between; gap: 1rem; pointer-events: none; font-family: var(--mono); font-size: .62rem; font-weight: 700; letter-spacing: .14em; color: oklch(96% 0.006 255 / 0.72); text-shadow: 0 1px 8px oklch(3% 0.02 265 / 0.85); }
+.stage-status span:last-child { color: var(--acid); }
+.stage-controls { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; padding: 1rem 0; font-family: var(--mono); font-size: .66rem; font-weight: 700; letter-spacing: .1em; color: var(--fog); }
+.controls-label { color: var(--fog-dim); }
+.stage-controls button { padding: .25rem 0; border: 0; border-bottom: 1px solid transparent; background: transparent; color: inherit; font: inherit; letter-spacing: inherit; transition: color 160ms var(--ease), border-color 160ms var(--ease); }
 .stage-controls button:hover { color: var(--white); }
 .stage-controls button[aria-pressed="true"] { border-bottom-color: var(--cinder); color: var(--white); }
-.stage-controls .replay { margin-left: auto; border: 1px solid oklch(96% 0.006 255 / 0.25); border-radius: 999px; padding: .35rem .8rem; }
+.stage-controls .replay { margin-left: auto; border: 1px solid var(--line); border-radius: 999px; padding: .35rem .85rem; }
 .stage-controls .replay:hover { border-color: var(--cinder); color: var(--white); }
 
 /* ============================ HERO COPY (below animation) ============================ */

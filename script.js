@@ -22,6 +22,7 @@ const content = {
     "hero.cta": "Start a project",
     "hero.ctaSecondary": "See the work",
     "machine.signal": "LIVE IDENTITY SIGNAL",
+    "machine.render": "Render",
     "machine.modeSignal": "Signal",
     "machine.modeStructure": "Structure",
     "machine.modeEdge": "Edge",
@@ -72,6 +73,7 @@ const content = {
     "hero.cta": "Iniciar um projeto",
     "hero.ctaSecondary": "Ver os trabalhos",
     "machine.signal": "SINAL DE IDENTIDADE AO VIVO",
+    "machine.render": "Render",
     "machine.modeSignal": "Sinal",
     "machine.modeStructure": "Estrutura",
     "machine.modeEdge": "Borda",
@@ -270,10 +272,13 @@ const setupAsciiIdentity = () => {
   const maskCtx = mask.getContext("2d", { willReadFrequently: true });
   if (!ctx || !maskCtx) return;
 
+  // Render modes. `density` = target glyph columns per 1000px of width, so
+  // resolution scales with the box but stays consistent across viewport sizes.
+  // Doubled from before for legibility (the wordmark reads as letters now).
   const MODES = {
-    signal: { glyphs: " .,:;irsXA253hMHGS#9B&@", columns: 96 },
-    structure: { glyphs: " .:-=+*#%@", columns: 84 },
-    edge: { glyphs: " .,:;-=+*#%@", columns: 112 },
+    signal: { glyphs: " .,:;irsXA253hMHGS#9B&@", density: 150 },
+    structure: { glyphs: " .:-=+*#%@", density: 132 },
+    edge: { glyphs: " .,:;-=+*#%@", density: 176 },
   };
   const TEXT_GLYPHS = " .:-=+*#%@";
   const MORPH_MS = 1700;
@@ -305,8 +310,10 @@ const setupAsciiIdentity = () => {
     canvas.width = Math.round(width * dpr);
     canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cols = MODES[mode].columns;
-    rows = Math.max(24, Math.round(cols * height / width));
+    // Columns scale with width so resolution tracks the box size. This is what
+    // doubles the character count per line vs. the old fixed-columns version.
+    cols = Math.max(120, Math.round((MODES[mode].density * width) / 1000));
+    rows = Math.max(32, Math.round(cols * height / width));
     cell = width / cols;
     mask.width = cols;
     mask.height = rows;
@@ -356,17 +363,38 @@ const setupAsciiIdentity = () => {
     return maskCtx.getImageData(0, 0, cols, rows).data;
   };
 
-  // Hue field: full spectrum drifting between blue, violet, magenta, gold.
-  const hueAt = (u, v, time) => {
-    const a = Math.sin(u * 6.4 - v * 3.7 + time * 0.00033);
-    const b = Math.cos(v * 7.1 + u * 2.3 + time * 0.00027);
-    const c = Math.sin((u + v) * 4.9 - time * 0.00019);
-    const blend = clamp((a + b + c + 3) / 6);
-    // Map [0..1] across blue(220) -> violet(280) -> magenta(320) -> gold(48).
-    if (blend < 0.33) return 220 + (280 - 220) * (blend / 0.33);
-    if (blend < 0.66) return 280 + (320 - 280) * ((blend - 0.33) / 0.33);
-    const last = (blend - 0.66) / 0.34;
-    return (320 + (48 + 360 - 320) * last) % 360;
+  // The field is a true gradient, not four flat patches. Each color center has a
+  // hue; we sum every center as a unit vector on the color wheel weighted by its
+  // intensity at that pixel, then take atan2 of the resultant. Where two centers
+  // overlap, their hues blend through the intermediate colors — exactly what a
+  // smooth gradient needs. Winner-takes-all (the old code) produced 4 hard edges.
+  const COLOR_CENTERS = [
+    { hue: 222, cx0: 0.16, cy0: 0.26, r: 0.10, fx: 0.00029, fy: 0.00023, ax: 0.12, ay: 0.13, w: 1.00 }, // blue
+    { hue: 284, cx0: 0.56, cy0: 0.44, r: 0.12, fx: 0.00021, fy: 0.00031, ax: 0.15, ay: 0.16, w: 1.02 }, // violet
+    { hue: 320, cx0: 0.78, cy0: 0.18, r: 0.095, fx: 0.00026, fy: 0.00019, ax: 0.13, ay: 0.14, w: 0.96 }, // magenta
+    { hue: 48, cx0: 0.84, cy0: 0.74, r: 0.085, fx: 0.00024, fy: 0.00017, ax: 0.10, ay: 0.12, w: 1.08 }, // gold
+  ];
+
+  // Sample the gradient at (u, v): returns { hue, intensity } after blending.
+  const gradientAt = (u, v, time) => {
+    let vecX = 0;
+    let vecY = 0;
+    let intensity = 0;
+    for (let i = 0; i < COLOR_CENTERS.length; i += 1) {
+      const c = COLOR_CENTERS[i];
+      const cx = c.cx0 + Math.sin(time * c.fx) * c.ax;
+      const cy = c.cy0 + Math.cos(time * c.fy) * c.ay;
+      const fall = falloff(u, v, cx, cy, c.r);
+      if (fall > 0.0001) {
+        const rad = (c.hue * Math.PI) / 180;
+        vecX += Math.cos(rad) * fall * c.w;
+        vecY += Math.sin(rad) * fall * c.w;
+        intensity += fall * c.w;
+      }
+    }
+    let hue = (Math.atan2(vecY, vecX) * 180) / Math.PI;
+    if (hue < 0) hue += 360;
+    return { hue, intensity: clamp(intensity) };
   };
 
   const render = (now) => {
@@ -380,7 +408,8 @@ const setupAsciiIdentity = () => {
     // Deep base wash so the field reads as light on dark.
     ctx.fillStyle = "oklch(7% 0.02 265)";
     ctx.fillRect(0, 0, width, height);
-    ctx.font = `${Math.max(6.5, cell * 1.12)}px "JetBrains Mono", ui-monospace, monospace`;
+    // Glyph height tracks the (now smaller) cell so doubled resolution fits.
+    ctx.font = `${Math.max(5.5, cell * 0.96)}px "JetBrains Mono", ui-monospace, monospace`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
@@ -392,22 +421,21 @@ const setupAsciiIdentity = () => {
         const x = (column + 0.5) * cell;
         const y = (row + 0.5) * cell;
 
-        // Several drifting light centers mix into an oil-film iridescence.
-        const blue = falloff(u, v, 0.16 + Math.sin(time * 0.00029) * 0.12, 0.26 + Math.cos(time * 0.00023) * 0.13, 0.09);
-        const violet = falloff(u, v, 0.56 + Math.cos(time * 0.00021) * 0.15, 0.44 + Math.sin(time * 0.00031) * 0.16, 0.11);
-        const magenta = falloff(u, v, 0.78 + Math.sin(time * 0.00026) * 0.13, 0.18 + Math.cos(time * 0.00019) * 0.14, 0.085);
-        const gold = falloff(u, v, 0.84 + Math.cos(time * 0.00024) * 0.1, 0.74 + Math.sin(time * 0.00017) * 0.12, 0.07);
-        const dominant = Math.max(blue, violet, magenta, gold);
+        // Blend the color centers into a single gradient sample.
+        const g = gradientAt(u, v, time);
+        let energy = clamp(0.08 + g.intensity * 0.92);
 
-        let hue = dominant === blue ? 222 : dominant === violet ? 284 : dominant === magenta ? 320 : 48;
-        hue += 14 * Math.sin(time * 0.0004 + u * 4 - v * 3);
+        // A faint global sweep adds movement across the whole field.
+        const sweep = (Math.sin(u * 18 - v * 11 + time * 0.0018) + 1) / 2;
+        energy = clamp(energy * (0.82 + sweep * 0.18));
 
-        let energy = clamp(0.06 + blue * 0.75 + violet * 0.8 + magenta * 0.78 + gold * 0.85);
         if (mode === "structure") {
-          energy = clamp(0.08 + dominant * 0.9 + (row % 6 === 0 ? 0.16 : 0));
+          energy = clamp(0.1 + g.intensity * 0.88 + (row % 8 === 0 ? 0.16 : 0));
         } else if (mode === "edge") {
-          const contour = Math.abs(Math.sin((blue * 1.5 + violet * 1.25 + magenta * 1.4 + gold * 1.7) * 19 + time * 0.0015));
-          energy = clamp(contour * 0.98 + dominant * 0.4);
+          // Highlight where neighboring gradient intensities differ -> contour.
+          const g2 = gradientAt(u + 1 / cols, v, time);
+          const contour = Math.abs(g2.intensity - g.intensity) * 6;
+          energy = clamp(contour + g.intensity * 0.4);
         }
 
         const pointerDistance = pointer.active ? Math.hypot(u - pointerU, v - pointerV) : 1;
@@ -418,16 +446,17 @@ const setupAsciiIdentity = () => {
           // Wordmark: crisp white ASCII, brighter where the mask is denser.
           const glyph = TEXT_GLYPHS[Math.min(TEXT_GLYPHS.length - 1, Math.ceil(textAlpha * (TEXT_GLYPHS.length - 1)))];
           if (glyph !== " ") {
-            ctx.fillStyle = `hsla(${225 + textAlpha * 20}, ${12 + textAlpha * 16}%, ${82 + textAlpha * 16}%, ${0.86 + textAlpha * 0.14})`;
+            ctx.fillStyle = `hsla(${230 + textAlpha * 16}, ${14 + textAlpha * 14}%, ${84 + textAlpha * 14}%, ${0.88 + textAlpha * 0.12})`;
             ctx.fillText(glyph, x, y);
           }
           continue;
         }
 
-        // Field: iridescent glyphs at the energy/hue of their position.
+        // Field: iridescent glyphs at the blended hue/intensity of this pixel.
         const glyph = modeDef.glyphs[Math.min(modeDef.glyphs.length - 1, Math.floor((energy + pointerLift) * (modeDef.glyphs.length - 1)))];
         if (glyph === " ") continue;
-        ctx.fillStyle = `hsla(${hue}, 96%, ${34 + (energy + pointerLift) * 44}%, ${0.16 + (energy + pointerLift) * 0.78})`;
+        const total = energy + pointerLift;
+        ctx.fillStyle = `hsla(${g.hue}, 94%, ${36 + total * 42}%, ${0.18 + total * 0.78})`;
         ctx.fillText(glyph, x, y);
       }
     }

@@ -67,20 +67,23 @@ export default function handler(request) {
     country = request.geo?.country || "—";
     source = "cookie";
   } else {
-    // Vercel populates request.geo at the edge. Locally we degrade gracefully.
-    country = request.geo?.country || null;
-    if (country === "BR") {
+    // Country alone is a poor language proxy (a Brazilian abroad or on a VPN
+    // still speaks Portuguese). Accept-Language is the more reliable signal:
+    // the browser sends pt-BR for a PT user regardless of where they sit.
+    country = request.geo?.country || "—";
+    const fromHeader = fromAcceptLanguage(request.headers.get("accept-language"));
+    if (fromHeader === "pt") {
       locale = "pt";
-    } else if (country) {
-      locale = "en";
-    } else {
-      locale = fromAcceptLanguage(request.headers.get("accept-language"));
       source = "header";
+    } else if (country === "BR") {
+      // BR country but non-pt browser — assume a Brazilian setup and show PT.
+      locale = "pt";
+      source = "geo";
+    } else {
+      locale = "en";
+      source = country !== "—" ? "geo" : "header";
     }
-    if (country) source = source || "geo";
   }
-
-  if (!source) source = "geo";
 
   return new Response(
     JSON.stringify({ locale, country: country || "—", source }),

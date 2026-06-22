@@ -15,7 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400..800&family=Onest:wght@400..800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
 
-    <!-- Pre-paint locale stamp (no FOUC). Picks locale before the body renders. -->
+    <!-- Pre-paint locale stamp (no FOUC). Picks locale before the body renders.
+         Reads ?lang=, then cookie, then navigator.language/anguages (pt-* => pt). -->
     <script>
       (function () {
         try {
@@ -23,11 +24,12 @@
           var q = (params.get("lang") || "").toLowerCase();
           var match = document.cookie.match(/(?:^|; )jcc_locale=([^;]+)/);
           var cookie = match ? decodeURIComponent(match[1]).toLowerCase() : "";
-          var nav = (navigator.language || "en").toLowerCase();
+          var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"]);
+          var navPt = langs.some(function (l) { return (l || "").toLowerCase().indexOf("pt") === 0; });
           var locale =
             (q === "pt" || q === "en") ? q :
             (cookie === "pt" || cookie === "en") ? cookie :
-            (nav.indexOf("pt") === 0) ? "pt" : "en";
+            navPt ? "pt" : "en";
           var html = document.documentElement;
           html.setAttribute("lang", locale === "pt" ? "pt-BR" : "en");
           html.setAttribute("data-locale", locale);
@@ -57,21 +59,22 @@
     </header>
 
     <main id="main">
-      <!-- ============ HERO STAGE: full-bleed ASCII animation ============ -->
-      <section class="hero-stage" id="top" data-machine aria-label="JCC identity animation">
-        <canvas class="hero-canvas" data-ascii-canvas aria-hidden="true"></canvas>
-
-        <div class="stage-overlay">
+      <!-- ============ HERO STAGE: full-bleed ASCII animation, controls below ============ -->
+      <section class="hero-stage" id="top" aria-label="JCC identity animation">
+        <div class="stage-canvas-wrap" data-machine>
+          <canvas class="hero-canvas" data-ascii-canvas aria-hidden="true"></canvas>
           <div class="stage-status">
             <span data-i18n="machine.signal">IDENTITY SIGNAL</span>
             <span data-machine-state>BOOTING</span>
           </div>
-          <div class="stage-controls" role="group" aria-label="Renderer controls">
-            <button type="button" data-ascii-mode="signal" aria-pressed="true" data-i18n="machine.modeSignal">Signal</button>
-            <button type="button" data-ascii-mode="structure" aria-pressed="false" data-i18n="machine.modeStructure">Structure</button>
-            <button type="button" data-ascii-mode="edge" aria-pressed="false" data-i18n="machine.modeEdge">Edge</button>
-            <button type="button" class="replay" data-ascii-replay data-i18n="machine.replay">Replay ↺</button>
-          </div>
+        </div>
+
+        <div class="stage-controls" role="group" aria-label="Renderer controls">
+          <span class="controls-label" data-i18n="machine.render">Render</span>
+          <button type="button" data-ascii-mode="signal" aria-pressed="true" data-i18n="machine.modeSignal">Signal</button>
+          <button type="button" data-ascii-mode="structure" aria-pressed="false" data-i18n="machine.modeStructure">Structure</button>
+          <button type="button" data-ascii-mode="edge" aria-pressed="false" data-i18n="machine.modeEdge">Edge</button>
+          <button type="button" class="replay" data-ascii-replay data-i18n="machine.replay">Replay ↺</button>
         </div>
       </section>
 
