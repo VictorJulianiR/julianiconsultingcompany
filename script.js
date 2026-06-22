@@ -172,6 +172,36 @@ const applyLocale = (locale) => {
 
 let activeLocale = currentLocale();
 
+// Apply a manual language choice: persist cookie, swap copy live, clean the URL.
+// Works on any host (static or Vercel) — no server round-trip needed.
+const chooseLocale = (locale) => {
+  if (locale !== "pt" && locale !== "en") return;
+  activeLocale = locale;
+  const html = document.documentElement;
+  html.setAttribute("data-locale", locale);
+  html.setAttribute("lang", locale === "pt" ? "pt-BR" : "en");
+  // Persist for a year so the choice survives reloads and beats geo/header guess.
+  document.cookie = `jcc_locale=${locale}; Max-Age=31536000; Path=/; SameSite=Lax`;
+  applyLocale(locale);
+  setContactLinks();
+  setupSignalLab();
+  // Drop ?lang= from the URL so it doesn't linger in shares/history.
+  const url = new URL(window.location.href);
+  if (url.searchParams.has("lang")) {
+    url.searchParams.delete("lang");
+    window.history.replaceState({}, "", url.toString());
+  }
+};
+
+const wireLangToggle = () => {
+  document.querySelectorAll("[data-lang-toggle]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      chooseLocale(link.dataset.langToggle);
+    });
+  });
+};
+
 const resolveLocale = async () => {
   try {
     const response = await fetch(LOCALE_ENDPOINT, { credentials: "same-origin" });
@@ -596,7 +626,16 @@ const setupHeader = () => {
 applyLocale(activeLocale);
 setContactLinks();
 wireBuyClicks();
+wireLangToggle();
 setupHeader();
 setupAsciiIdentity();
 setupSignalLab();
+
+// A ?lang= param on initial load is a manual choice -> persist + clean URL.
+const initialParams = new URLSearchParams(window.location.search);
+const initialLang = (initialParams.get("lang") || "").toLowerCase();
+if (initialLang === "pt" || initialLang === "en") {
+  chooseLocale(initialLang);
+}
+
 resolveLocale(); // async edge confirmation, may refine locale post-load
