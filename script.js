@@ -253,11 +253,10 @@ const wireBuyClicks = () => {
   });
 };
 
-/* ====================== HERO: ASCII IDENTITY OVER IRIDESCENT BG ====================== */
-/* The page's CSS gradient is the iridescent field. The canvas sits in a bordered    */
-/* box beside the hero copy and paints only monochrome white ASCII: a drifting       */
-/* density field plus the JCC -> "Juliani Consulting Company" morph. A translucent   */
-/* dark veil lets the gradient read through with depth. Pointer stirs the field.     */
+/* ====================== HERO: FULL-VIEWPORT ASCII IDENTITY ====================== */
+/* The canvas paints a living iridescent field (drifting blue / violet /            */
+/* magenta / gold light centers), with the JCC -> "Juliani Consulting Company"      */
+/* wordmark rendered as crisp white ASCII on top. Pointer movement stirs the field.  */
 
 const setupAsciiIdentity = () => {
   const canvas = document.querySelector("[data-ascii-canvas]");
@@ -357,6 +356,19 @@ const setupAsciiIdentity = () => {
     return maskCtx.getImageData(0, 0, cols, rows).data;
   };
 
+  // Hue field: full spectrum drifting between blue, violet, magenta, gold.
+  const hueAt = (u, v, time) => {
+    const a = Math.sin(u * 6.4 - v * 3.7 + time * 0.00033);
+    const b = Math.cos(v * 7.1 + u * 2.3 + time * 0.00027);
+    const c = Math.sin((u + v) * 4.9 - time * 0.00019);
+    const blend = clamp((a + b + c + 3) / 6);
+    // Map [0..1] across blue(220) -> violet(280) -> magenta(320) -> gold(48).
+    if (blend < 0.33) return 220 + (280 - 220) * (blend / 0.33);
+    if (blend < 0.66) return 280 + (320 - 280) * ((blend - 0.33) / 0.33);
+    const last = (blend - 0.66) / 0.34;
+    return (320 + (48 + 360 - 320) * last) % 360;
+  };
+
   const render = (now) => {
     const progress = reducedMotion ? 1 : loopProgress(now);
     const textPixels = drawTextMask(progress);
@@ -365,10 +377,8 @@ const setupAsciiIdentity = () => {
     const pointerU = pointer.x / width;
     const pointerV = pointer.y / height;
 
-    // Translucent dark veil — lets the CSS iridescent gradient show through
-    // behind the glyphs, giving depth without competing color in the ASCII.
-    ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = "oklch(7% 0.02 265 / 0.55)";
+    // Deep base wash so the field reads as light on dark.
+    ctx.fillStyle = "oklch(7% 0.02 265)";
     ctx.fillRect(0, 0, width, height);
     ctx.font = `${Math.max(6.5, cell * 1.12)}px "JetBrains Mono", ui-monospace, monospace`;
     ctx.textAlign = "center";
@@ -382,20 +392,22 @@ const setupAsciiIdentity = () => {
         const x = (column + 0.5) * cell;
         const y = (row + 0.5) * cell;
 
-        // A couple of slow-drifting light centers give the monochrome field
-        // a living "density" without introducing color.
-        const lightA = falloff(u, v, 0.3 + Math.sin(time * 0.00029) * 0.16, 0.4 + Math.cos(time * 0.00023) * 0.14, 0.16);
-        const lightB = falloff(u, v, 0.7 + Math.cos(time * 0.00021) * 0.14, 0.6 + Math.sin(time * 0.00031) * 0.16, 0.16);
-        const scan = (Math.sin(u * 22 - v * 13 + time * 0.0018) + 1) / 2;
-        const ripple = (Math.sin(Math.hypot(u - 0.5, v - 0.5) * 26 - time * 0.002) + 1) / 2;
-        const dominant = Math.max(lightA, lightB);
+        // Several drifting light centers mix into an oil-film iridescence.
+        const blue = falloff(u, v, 0.16 + Math.sin(time * 0.00029) * 0.12, 0.26 + Math.cos(time * 0.00023) * 0.13, 0.09);
+        const violet = falloff(u, v, 0.56 + Math.cos(time * 0.00021) * 0.15, 0.44 + Math.sin(time * 0.00031) * 0.16, 0.11);
+        const magenta = falloff(u, v, 0.78 + Math.sin(time * 0.00026) * 0.13, 0.18 + Math.cos(time * 0.00019) * 0.14, 0.085);
+        const gold = falloff(u, v, 0.84 + Math.cos(time * 0.00024) * 0.1, 0.74 + Math.sin(time * 0.00017) * 0.12, 0.07);
+        const dominant = Math.max(blue, violet, magenta, gold);
 
-        let energy = clamp(0.08 + dominant * 0.8 + scan * 0.12 + ripple * 0.1);
+        let hue = dominant === blue ? 222 : dominant === violet ? 284 : dominant === magenta ? 320 : 48;
+        hue += 14 * Math.sin(time * 0.0004 + u * 4 - v * 3);
+
+        let energy = clamp(0.06 + blue * 0.75 + violet * 0.8 + magenta * 0.78 + gold * 0.85);
         if (mode === "structure") {
-          energy = clamp(0.08 + dominant * 0.85 + (row % 6 === 0 ? 0.18 : 0) + scan * 0.14);
+          energy = clamp(0.08 + dominant * 0.9 + (row % 6 === 0 ? 0.16 : 0));
         } else if (mode === "edge") {
-          const contour = Math.abs(Math.sin((lightA * 1.6 + lightB * 1.3) * 19 + time * 0.0015));
-          energy = clamp(contour * 0.96 + dominant * 0.4);
+          const contour = Math.abs(Math.sin((blue * 1.5 + violet * 1.25 + magenta * 1.4 + gold * 1.7) * 19 + time * 0.0015));
+          energy = clamp(contour * 0.98 + dominant * 0.4);
         }
 
         const pointerDistance = pointer.active ? Math.hypot(u - pointerU, v - pointerV) : 1;
@@ -406,17 +418,16 @@ const setupAsciiIdentity = () => {
           // Wordmark: crisp white ASCII, brighter where the mask is denser.
           const glyph = TEXT_GLYPHS[Math.min(TEXT_GLYPHS.length - 1, Math.ceil(textAlpha * (TEXT_GLYPHS.length - 1)))];
           if (glyph !== " ") {
-            ctx.fillStyle = `hsla(220, 8%, ${86 + textAlpha * 12}%, ${0.9 + textAlpha * 0.1})`;
+            ctx.fillStyle = `hsla(${225 + textAlpha * 20}, ${12 + textAlpha * 16}%, ${82 + textAlpha * 16}%, ${0.86 + textAlpha * 0.14})`;
             ctx.fillText(glyph, x, y);
           }
           continue;
         }
 
-        // Field: monochrome white glyphs at varying density/opacity.
+        // Field: iridescent glyphs at the energy/hue of their position.
         const glyph = modeDef.glyphs[Math.min(modeDef.glyphs.length - 1, Math.floor((energy + pointerLift) * (modeDef.glyphs.length - 1)))];
         if (glyph === " ") continue;
-        const intensity = energy + pointerLift;
-        ctx.fillStyle = `hsla(220, 10%, ${72 + intensity * 22}%, ${0.14 + intensity * 0.8})`;
+        ctx.fillStyle = `hsla(${hue}, 96%, ${34 + (energy + pointerLift) * 44}%, ${0.16 + (energy + pointerLift) * 0.78})`;
         ctx.fillText(glyph, x, y);
       }
     }
